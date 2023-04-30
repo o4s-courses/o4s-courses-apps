@@ -1,7 +1,7 @@
 import type { Lesson, UserLessonProgress } from "@o4s/db";
 
 type Props = {
-  activeLesson: Lesson;
+  activeLesson: Lesson | undefined;
   lessonProgress: number[];
   setLessonProgress: (lessonProgess: number[]) => void;
 };

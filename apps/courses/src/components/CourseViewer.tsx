@@ -36,13 +36,20 @@ const CourseViewer = ({
   const postId = activeLesson?.post?.postId;
   const postReady = activeLesson?.post?.status === "published";
   // const placeholder = activeLesson?.post?.placeholder
+  let isStudent = false;
+
+  if (course.students.length > 0) isStudent = true;
 
   useEffect(() => {
     const lessonIndex =
-      course.lessons.findIndex((lesson) => lesson.id === activeLesson.id) + 1;
-    router.push(`/courses/${course.id}/lessons/${lessonIndex}`, undefined, {
-      shallow: true,
-    });
+      course.lessons.findIndex((lesson) => lesson.id === activeLesson?.id) + 1;
+    void router.push(
+      `/courses/${course.id}/lessons/${lessonIndex}`,
+      undefined,
+      {
+        shallow: true,
+      },
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLesson, course]);
 
@@ -75,9 +82,9 @@ const CourseViewer = ({
                 <div className="mb-6 w-full bg-gray-200" />
               )}
 
-              <Heading>{activeLesson.name}</Heading>
+              <Heading>{activeLesson?.name}</Heading>
               <p className="text-lg text-slate-600 dark:text-slate-400">
-                {activeLesson.description}
+                {activeLesson?.description}
               </p>
             </div>
             <div className="drawer-side">

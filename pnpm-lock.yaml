@@ -65,7 +65,7 @@ importers:
         specifier: ^2.51.6
         version: 2.51.6(autoprefixer@10.4.14)(postcss@8.4.23)
       next:
-        specifier: ^13.3.2
+        specifier: ^13.3.1
         version: 13.3.2(@babel/core@7.21.4)(react-dom@18.2.0)(react@18.2.0)
       next-auth:
         specifier: ^4.22.1
