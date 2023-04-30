@@ -1,0 +1,18 @@
+{
+  "name": "@o4s/ghost",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@tryghost/admin-api": "^1.13.5",
+    "@tryghost/content-api": "^1.11.9",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
+    "@o4s/eslint-config": "^0.1.0",
+    "eslint": "^8.38.0",
+    "typescript": "^5.0.4"
+  }
+}

@@ -1,65 +1,141 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-    provider = "prisma-client-js"
+  provider        = "prisma-client-js"
 }
 
 datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  directUrl    = env("DATABASE_DIRECT_URL")
+  relationMode = "prisma"
 }
 
-model Post {
-    id      String @id @default(cuid())
-    title   String
-    content String
-}
-
-// NextAuth.js Models
-// NOTE: When using postgresql, mysql or sqlserver, 
-// uncomment the @db.Text annotations below
-// @see https://next-auth.js.org/schemas/models
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
-    @@unique([provider, providerAccountId])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id               String               @id @default(cuid())
+  name             String?
+  email            String?              @unique
+  emailVerified    DateTime?
+  image            String?
+  role             String               @default("user") @db.VarChar(10)
+  customerId       String?
+  accounts         Account[]
+  sessions         Session[]
+  courses          Course[]
+  posts            Post[]
+  completedLessons UserLessonProgress[]
+  subscriptions    Subscription[]
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
+  @@unique([identifier, token])
+}
+
+model Subscription {
+  user     User     @relation(fields: [userId], references: [id])
+  userId   String
+  course   Course   @relation(fields: [courseId], references: [id])
+  courseId Int
+  active   Boolean  @default(true)
+  created  DateTime @default(now())
+  expires  DateTime?
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+}
+
+model Course {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  slug        String
+  lessons     Lesson[]
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+  students    Subscription[]
+  products    Product[]
+  published   Boolean  @default(false)
+
+  @@index([authorId])
+}
+
+model Lesson {
+  id             Int                  @id @default(autoincrement())
+  name           String
+  description    String
+  slug           String
+  course         Course               @relation(fields: [courseId], references: [id])
+  courseId       Int
+  post           Post?
+  usersCompleted UserLessonProgress[]
+
+  @@index([courseId])
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  lesson     Lesson?  @relation(fields: [lessonId], references: [id])
+  lessonId   Int?     @unique
+  owner      User     @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  postId     String?  @unique @db.VarChar(24)
+  html       String?  @db.LongText
+  coverImage String?  @db.VarChar(2000)
+  status     String   @default("draft") @db.VarChar(50)
+
+  @@index([ownerId])
+}
+
+model UserLessonProgress {
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String // relation scalar field (used in the `@relation` attribute above)
+  lesson      Lesson   @relation(fields: [lessonId], references: [id])
+  lessonId    Int // relation scalar field (used in the `@relation` attribute above)
+  completedAt DateTime @default(now())
+
+  @@id([userId, lessonId])
+  @@index([userId])
+  @@index([lessonId])
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Int      @default(3500)
+  currency    String   @default("EUR")
+  courses     Course[]
 }

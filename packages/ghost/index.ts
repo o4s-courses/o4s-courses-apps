@@ -1,0 +1,1 @@
+export { addSingleGhostPost, updateSingleGhostPost } from './src/admin'
