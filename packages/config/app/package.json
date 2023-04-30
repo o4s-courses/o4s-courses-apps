@@ -1,6 +1,7 @@
 {
   "name": "@o4s/app-config",
   "version": "0.1.0",
+  "author": "José Cordeiro <joseantcordeiro@gmail.com>",
   "main": "index.ts",
   "license": "MIT",
   "files": [

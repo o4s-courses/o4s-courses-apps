@@ -1,6 +1,7 @@
 {
   "name": "@o4s/auth",
   "version": "0.1.0",
+  "author": "José Cordeiro <joseantcordeiro@gmail.com>",
   "main": "./index.ts",
   "types": "./index.ts",
   "license": "MIT",

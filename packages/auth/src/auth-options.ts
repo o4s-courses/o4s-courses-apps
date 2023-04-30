@@ -46,7 +46,8 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    session({ session, token, user }) {
+    // eslint-disable-next-line @typescript-eslint/require-await
+    async session({ session, token, user }) {
       if (session.user) {
         session.user.id = user.id
         session.user.role = user.role
@@ -58,7 +59,7 @@ export const authOptions: NextAuthOptions = {
   theme: {
     colorScheme: "dark", // "auto" | "dark" | "light"
     brandColor: "#1FB2A5", // Hex color code
-    logo: "/images/logoO4S-70alt.png", // Absolute URL to image
+    logo: "https://cld.pt/dl/download/d2e82d71-a6b7-4ab2-8c21-8f2d4be99505/logoO4S-70alt.png", // Absolute URL to image
     // buttonText: "" // Hex color code
   }
 };

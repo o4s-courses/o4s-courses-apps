@@ -1,4 +1,5 @@
 packages:
+  - apps/courses
   - apps/expo
   - apps/nextjs
   - packages/api

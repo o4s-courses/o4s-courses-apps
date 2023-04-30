@@ -1,6 +1,7 @@
 {
   "name": "@o4s/db",
   "version": "0.1.0",
+  "author": "José Cordeiro <joseantcordeiro@gmail.com>",
   "main": "./index.ts",
   "types": "./index.ts",
   "license": "MIT",
@@ -8,11 +9,13 @@
     "clean": "rm -rf .turbo node_modules",
     "db:generate": "pnpm with-env prisma generate",
     "db:push": "pnpm with-env prisma db push --skip-generate",
+    "db:proxy": "pscale connect o4s-courses-dev main --port 3309",
     "dev": "pnpm with-env prisma studio --port 5556",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0"
+    "@prisma/client": "^4.13.0",
+    "@planetscale/database": "^1.7.0"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
