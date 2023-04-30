@@ -353,9 +353,15 @@ importers:
         specifier: ^9.0.0
         version: 9.0.0
     devDependencies:
+      '@o4s/eslint-config':
+        specifier: ^0.1.0
+        version: link:../config/eslint
       '@types/jsonwebtoken':
         specifier: ^9.0.2
         version: 9.0.2
+      eslint:
+        specifier: ^8.38.0
+        version: 8.38.0
       typescript:
         specifier: ^5.0.4
         version: 5.0.4
