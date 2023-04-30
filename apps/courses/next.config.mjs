@@ -7,6 +7,10 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  swcMinify: true,
+  images: {
+    domains: ["joseantcordeiro.hopto.org"],
+  },
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@o4s/auth", "@o4s/db", "o4s/ghost"],
   /** We already do linting and typechecking as separate tasks in CI */

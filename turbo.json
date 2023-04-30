@@ -10,6 +10,9 @@
       "inputs": ["prisma/schema.prisma"],
       "cache": false
     },
+    "db:proxy": {
+      "cache": false
+    },
     "dev": {
       "persistent": true,
       "cache": false
