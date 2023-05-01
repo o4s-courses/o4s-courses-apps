@@ -70,14 +70,18 @@ const Features = () => {
       className="bg-gray-50 dark:my-0 dark:bg-gray-900 sm:my-16"
     >
       <div className="custom-screen text-gray-600 dark:text-gray-300">
-        <div className="max-w-xl space-y-3">
+        <div className="mt-12 space-y-3">
           <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-50 sm:text-4xl">
-            <strong>Educação para a </strong>Sustentabilidade
+            <strong>MOOC O4S</strong>
           </h2>
           <p>
-            <strong>Encorajamos</strong> uma aprendizagem ao longo da vida e{" "}
-            <strong>partilhamos</strong> com o estudante a responsabilidade do
-            seu percurso de educação.
+            O MOOC O4S é uma plataforma online de aprendizagem para a
+            sustentabilidade. É um espaço e uma ferramenta de aprendizagem que
+            permite a qualquer pessoa, interessada na construção de um modo de
+            vida alternativo e de um mundo mais equitativo e sustentável,
+            aprofundar os seus conhecimentos nas cinco dimensões da
+            sustentabilidade: Educação Holística, Social, Ecologia, Economia e
+            Visão do Mundo.
           </p>
         </div>
         <div className="mt-12">

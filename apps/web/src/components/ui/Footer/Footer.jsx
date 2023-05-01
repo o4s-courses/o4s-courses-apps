@@ -3,9 +3,8 @@ import Link from "next/link";
 import Newsletter from "../Newsletter";
 
 const navigation = [
-  { name: "MOOC O4S", href: "/#features" },
-  { name: "Cursos", href: "/tutorials/cs50" },
-  { name: "Preço", href: "/#pricing" },
+  { name: "Termos e Condições", href: "/termos" },
+  { name: "Política de Privacidade", href: "/privacidade" },
 ];
 
 const Footer = () => (
