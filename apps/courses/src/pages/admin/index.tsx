@@ -1,5 +1,5 @@
-import { type GetServerSideProps, type NextPage } from "next";
 import Link from "next/link";
+import type { GetServerSideProps, NextPage } from "next/types";
 import { useSession } from "next-auth/react";
 
 import { getServerSession, type Session } from "@o4s/auth";

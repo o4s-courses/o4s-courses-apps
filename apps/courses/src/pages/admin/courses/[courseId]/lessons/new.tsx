@@ -1,6 +1,7 @@
 // import { useState } from 'react'
-import type { GetServerSideProps, NextPage } from "next";
+
 import { useRouter } from "next/router";
+import type { GetServerSideProps, NextPage } from "next/types";
 import { useMutation } from "@tanstack/react-query";
 import { FormProvider, useForm, type SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -47,7 +48,7 @@ const AdminNewLesson: NextPage<AdminNewLessonPageProps> = ({ postId }) => {
 
   const mutation = useMutation(handler, {
     onSuccess: (data: LessonCreateResult) => {
-      router.push(`/admin/courses/${courseId}/lessons/${data.id}`);
+      void router.push(`/admin/courses/${courseId}/lessons/${data.id}`);
     },
     onError: (error) => {
       console.error(error);

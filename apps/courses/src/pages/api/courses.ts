@@ -1,5 +1,5 @@
 import { prisma } from "@o4s/db";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 import type { Course } from "@o4s/db";
 import { getServerSession } from "@o4s/auth";
 import slugify from "@sindresorhus/slugify";

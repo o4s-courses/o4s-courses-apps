@@ -1,5 +1,5 @@
 import { prisma } from "@o4s/db";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 import type { Post } from "@o4s/db";
 
 export default async function assetHandler(req: NextApiRequest, res: NextApiResponse<Post>) {

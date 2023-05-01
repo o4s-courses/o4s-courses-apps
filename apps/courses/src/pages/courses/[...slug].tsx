@@ -1,6 +1,6 @@
 import { useState, type ReactElement } from "react";
-import type { GetServerSideProps } from "next";
 import Link from "next/link";
+import type { GetServerSideProps } from "next/types";
 import { useSession } from "next-auth/react";
 
 import { getServerSession } from "@o4s/auth";
@@ -71,7 +71,8 @@ export default ViewCourse;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await getServerSession(context);
-  const isStudent = false;
+  let userId = "";
+  if (session) userId = session.user.id;
 
   const id = context?.query?.slug?.[0];
   if (typeof id !== "string") {
@@ -87,7 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         },
       },
       students: {
-        where: { userId: session?.user.id },
+        where: { userId: userId },
         select: {
           userId: true,
         },
@@ -106,7 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const completedLessons = await prisma.userLessonProgress
     .findMany({
       where: {
-        userId: session?.user?.id,
+        userId: userId,
         lessonId: {
           in: course.lessons.map((lesson) => lesson.id),
         },

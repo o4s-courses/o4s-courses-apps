@@ -1,5 +1,5 @@
-import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
+import type { GetServerSideProps, NextPage } from "next/types";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { type SubmitHandler } from "react-hook-form";
@@ -46,7 +46,7 @@ const AdminLessonEdit: NextPage<AdminLessonEditPageProps> = ({ lesson }) => {
 
   const deleteMutation = useMutation(deleteLesson, {
     onSuccess: () => {
-      router.push(`/admin/courses/${lesson.courseId}`);
+      void router.push(`/admin/courses/${lesson.courseId}`);
       toast.success("Lesson deleted successfully");
     },
     onError: (error) => {

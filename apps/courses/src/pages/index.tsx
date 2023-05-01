@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next/types";
 
 import { getServerSession, type Session } from "@o4s/auth";
 import { prisma, type Course, type Subscription } from "@o4s/db";

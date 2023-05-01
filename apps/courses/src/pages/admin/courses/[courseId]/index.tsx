@@ -1,6 +1,6 @@
-import { type GetServerSideProps, type NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import type { GetServerSideProps, NextPage } from "next/types";
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { type SubmitHandler } from "react-hook-form";

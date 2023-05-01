@@ -1,5 +1,5 @@
 import { prisma } from "@o4s/db";
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from "next/types";
 import type { Lesson } from "@o4s/db";
 import { getServerSession } from "@o4s/auth";
 import slugify from '@sindresorhus/slugify'
@@ -69,7 +69,7 @@ export default async function assetHandler(req: NextApiRequest, res: NextApiResp
           }
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         const ghostPost = await addSingleGhostPost(name)
 
         const updatePost = await prisma.post.update({
