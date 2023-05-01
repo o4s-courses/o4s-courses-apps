@@ -48,4 +48,4 @@ yarn-error.log*
 .turbo
 
 # Git Workflows
-.github/workflows
+.github/workflows/

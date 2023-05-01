@@ -69,11 +69,14 @@ export default async function assetHandler(req: NextApiRequest, res: NextApiResp
           }
         });
 
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-argument
         const ghostPost = await addSingleGhostPost(name)
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const updatePost = await prisma.post.update({
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
           where: { id: postId },
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
           data: { postId: ghostPost.posts[0].id },
         });
 
