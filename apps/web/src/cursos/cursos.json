@@ -1,50 +1,56 @@
 [
 	{
 			"thumbnail": "/thumbnails/intro.png",
+			"price": "€35,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "Introdução à Permacultura",
-			"description": "We will be discussing the  important subjects  within  the scope  of  computer  science.",
-			"duration": "25:45",
+			"description": "Este curso aborda a história, a ética, os princípios e as estratégias da Permacultura. Incluindo o contexto urbano.",
+			"include": "NÃO INCLUI facilitação nem certificação",
 			"slug": "introducao-a-permacultura"
 	},
 	{
 			"thumbnail": "/thumbnails/datastructures.png",
+			"price": "€35,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1669411003/Binary_Search_Algorithm_in_100_Seconds_hyg6n5.mp4",
 			"title": "Introdução à Agricultura Biodinâmica",
-			"description": "We will cover fundamental concepts pertaining to memory, complexity analysis, and more.",
-			"duration": "5:00:45",
+			"description": "A Agricultura Biodinâmica é um método de cultivo orgânico, desenvolvido a partir das palestras do cientista e filósofo Rudolf Steiner no início do sec. XX, que utiliza uma compreensão holística das técnicas agrícolas.",
+			"include": "NÃO INCLUI facilitação nem certificação",
 			"slug": "introducao-a-agricultura-biodinamica"
 	},
 	{
 			"thumbnail": "/thumbnails/databases.png",
+			"price": "GRATUITO",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "Sql and NoSql Databases",
 			"description": "In this video we will learn the difference between SQL, and NoSQL, and how to deal with both of them.",
-			"duration": "3:20:45",
+			"include": "NÃO INCLUI facilitação nem certificação",
 			"slug": "sql-and-nosql-databases"
 	},
 	{
 			"thumbnail": "/thumbnails/computerarchitecture.png",
+			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
-			"title": "Computer Architecture",
-			"description": "You will how learn to design the computer architecture of complex modern microprocessors.",
-			"duration": "1:12:29",
-			"slug": "computer-architecture"
+			"title": "Introdução à Permacultura",
+			"description": "Este curso aborda a história, a ética, os princípios e as estratégias da Permacultura. Incluindo o contexto urbano.",
+			"include": "INCLUI facilitação e certificação",
+			"slug": "introducao-a-permacultura-facilitacao-certificacao"
 	},
 	{
 			"thumbnail": "/thumbnails/discretemath.png",
+			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
-			"title": "Discrete Math",
+			"title": "Introdução à Agricultura Biodinâmica",
 			"description": "What is discrete mathematics, and what are the main concepts of discrete mathematics ..etc.",
-			"duration": "1:45:30",
-			"slug": "discrete-math"
+			"include": "INCLUI facilitação e certificação",
+			"slug": "introducao-a-agricultura-biodinamica-facilitacao-certificacao"
 	},
 	{
 			"thumbnail": "/thumbnails/javaScript.png",
+			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "JavaScript programming language",
 			"description": "We wil cover the basic of JavaScript, and how it’s works, and you will learn OOP.",
-			"duration": "4:30:00",
+			"include": "INCLUI facilitação e certificação",
 			"slug": "javascript-programming-language"
 	}
 ]

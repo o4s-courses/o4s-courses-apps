@@ -34,7 +34,7 @@ export const PlayList = ({ items, className, ...props }) => {
                                     <h4 className="flex-1 text-gray-700 dark:text-gray-200 font-medium lg:line-clamp-1">
                                         {item.title}
                                     </h4>
-                                    <span className="text-sm">{item.duration}</span>
+                                    
                                 </Link>
                             </li>
                         ))

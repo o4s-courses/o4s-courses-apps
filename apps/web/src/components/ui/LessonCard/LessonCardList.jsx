@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { Duration, Title, SubTitle } from "./"
+import { Includes, Title, SubTitle } from "./"
 
-export const LessonCardList = ({ idx, item: { thumbnail, title, description, duration, slug } }) => {
+export const LessonCardList = ({ idx, item: { thumbnail, price, title, description, include, slug } }) => {
 
     return (
         <div className="gap-x-6 sm:flex">
@@ -18,10 +18,10 @@ export const LessonCardList = ({ idx, item: { thumbnail, title, description, dur
             </Link>
             <div className="space-y-2 pt-4 sm:pt-0">
                 <div className="text-sm flex items-center justify-between">
-                    <SubTitle>Lesson {idx + 1}</SubTitle>
-                    <Duration className="sm:hidden">
-                        {duration}
-                    </Duration>
+                    <SubTitle>Preço: {price}</SubTitle>
+                    <Includes className="sm:hidden">
+                        {include}
+                    </Includes>
                 </div>
                 <Title>
                     <Link
@@ -33,9 +33,9 @@ export const LessonCardList = ({ idx, item: { thumbnail, title, description, dur
                 <p className="max-w-xl text-gray-600 dark:text-gray-300 sm:line-clamp-2">
                     {description}
                 </p>
-                <Duration className="hidden sm:block">
-                    {duration}
-                </Duration>
+                <Includes className="hidden sm:block">
+                    {include}
+                </Includes>
             </div>
         </div>
     )

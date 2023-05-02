@@ -21,7 +21,7 @@ const Curso = ({ getLesson }) => {
     <>
       <Head>
         <title>{getLesson?.title}</title>
-        <meta name="description" content="" />
+        <meta name="description" content={getLesson?.description} />
       </Head>
 
       <div className="mt-16 lg:mt-20">
@@ -29,7 +29,7 @@ const Curso = ({ getLesson }) => {
           <Image
             src={getLesson?.thumbnail}
             className="w-full rounded-lg"
-            alt="Cursos O4S"
+            alt={getLesson?.title}
             width={1640}
             height={924}
           />
