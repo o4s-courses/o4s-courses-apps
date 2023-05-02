@@ -5,15 +5,15 @@ export const LessonCardGrid = ({ idx, item: { thumbnail, title, description, dur
 
     return (
         <div className="space-y-2 sm:max-w-sm">
-            <Link href={`/tutorials/cs50/${slug}`}>
+            <Link href={`/cursos/sustentabilidade/${slug}`}>
                 <img src={thumbnail} className="rounded-lg w-full" alt={title} />
             </Link>
             <div className="pt-2 text-sm flex items-center justify-between">
-                <SubTitle>Lesson {idx + 1}</SubTitle>
+                <SubTitle>Curso {idx + 1}</SubTitle>
                 <Duration>{duration}</Duration>
             </div>
             <Title>
-                <Link href={`/tutorials/cs50/${slug}`}>
+                <Link href={`/cursos/sustentabilidade/${slug}`}>
                     {title}
                 </Link>
             </Title>

@@ -6,7 +6,7 @@ export const LessonCardList = ({ idx, item: { thumbnail, title, description, dur
     return (
         <div className="gap-x-6 sm:flex">
             <Link
-                href={`/tutorials/cs50/${slug}`}
+                href={`/cursos/sustentabilidade/${slug}`}
                 className="sm:max-w-[17rem]"
             >
                 <img
@@ -25,7 +25,7 @@ export const LessonCardList = ({ idx, item: { thumbnail, title, description, dur
                 </div>
                 <Title>
                     <Link
-                        href={`/tutorials/cs50/${slug}`}
+                        href={`/cursos/sustentabilidade/${slug}`}
                     >
                         {title}
                     </Link>

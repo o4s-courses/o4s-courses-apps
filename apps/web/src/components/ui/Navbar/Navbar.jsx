@@ -35,7 +35,7 @@ const Navbar = () => {
 
   const navigation = [
     { name: "MOOC O4S", href: "/#features" },
-    { name: "Cursos", href: "/tutorials/cs50" },
+    { name: "Cursos", href: "/cursos/sustentabilidade" },
     { name: "Ajuda", href: "/ajuda" },
     { name: "Preço", href: "/#pricing" },
     { name: "Blogue", href: "/blogue" },
