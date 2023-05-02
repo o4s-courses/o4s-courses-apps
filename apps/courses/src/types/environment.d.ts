@@ -9,6 +9,10 @@ declare namespace NodeJS {
     EMAIL_SERVER_USER: string;
     EMAIL_SERVER_PASSWORD: string;
     EMAIL_FROM: string;
+		CACHE_HOST: string;
+		CACHE_PORT: number;
+		CACHE_USER: string;
+		CACHE_PASSWORD: string;
     GHOST_CONTENT_API_KEY: string;
     GHOST_ADMIN_API_KEY: string;
     GHOST_API_URL: string;
