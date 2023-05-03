@@ -1,36 +1,10 @@
 import type { GetServerSideProps, NextPage } from "next/types";
-import { getServerSession, type Session } from "@o4s/auth";
 import { api, type RouterOutputs } from "~/utils/api";
 
-type Props = {
-  session: Session;
-  courses: {
-    id: number;
-		name: string;
-		description: string;
-		published: boolean;
-  }[];
-};
+const Home: NextPage = () => {
+	const { data: session } = api.auth.getSession.useQuery();
 
-const Home: NextPage<Props> = ({ courses }) => {
-  const courseQuery = api.course.byAuthor.useQuery();
-
-	const deleteCourseMutation = api.course.delete.useMutation({
-    onSettled: () => courseQuery.refetch(),
-  });
-
-	return (
-
-	);
-}
-
-export default Home;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getServerSession(context);
-  let userId = "";
-
-  if (!session) {
+	if (!session) {
     return {
       redirect: {
         destination: "/api/auth/signin",
@@ -48,12 +22,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
 	};
 
-	const courses = api.course.byAuthor.useQuery();
+  const courseQuery = api.course.byAuthor.useQuery();
 
-  return {
-    props: {
-      session,
-      courses,
-    },
-  };
-};
+	const deleteCourseMutation = api.course.delete.useMutation({
+    onSettled: () => courseQuery.refetch(),
+  });
+
+	return (
+
+	);
+}
+
+export default Home;
