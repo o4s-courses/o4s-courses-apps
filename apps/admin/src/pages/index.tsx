@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import SectionWrapper from "~/components/SectionWrapper";
 import { type GetServerSideProps, type NextPage } from 'next/types';
 import { getServerSession, type Session } from "@o4s/auth";
