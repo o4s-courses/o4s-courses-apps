@@ -4,7 +4,7 @@ type Props = {
 };
 
 const SectionWrapper = ({ children, className }: Props) => (
-    <section className={`py-16 sm:py-28 ${className || ""}`}>
+    <section className={`py-6 sm:py-18 ${className || ""}`}>
         {children}
     </section>
 );

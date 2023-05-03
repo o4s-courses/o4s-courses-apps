@@ -1,6 +1,7 @@
+import { type NextPage } from "next/types";
 import { signOut } from "next-auth/react";
 
-export const Unauthorized = () => {
+const Unauthorized: NextPage = () => {
   return (
     <main>
       <div className="mx-auto flex h-screen max-w-screen-xl items-center justify-start px-4 md:px-8">
@@ -11,9 +12,9 @@ export const Unauthorized = () => {
           <p className="text-gray-600 dark:text-gray-200">
             Desculpe, não tem autorização para utilizar este sistema.
           </p>
-          <a
-            onClick={() => signOut()}
-            className="inline-flex items-center gap-x-1 font-medium text-indigo-600 duration-150 hover:text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-200"
+          <button
+            onClick={() => void signOut()}
+            className="rounded-full bg-white/10 px-10 py-3 font-semibold text-black dark:text-white no-underline transition hover:bg-white/20"
           >
             Sair
             <svg
@@ -28,9 +29,11 @@ export const Unauthorized = () => {
                 clipRule="evenodd"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </main>
   );
 };
+
+export default Unauthorized;

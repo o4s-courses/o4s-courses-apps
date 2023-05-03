@@ -1,0 +1,15 @@
+import Head from "next/head";
+
+type Props = {
+	title: string;
+};
+
+const Header = ({ title }: Props) => (
+  <Head>
+		<title>{title}</title>
+		<meta name="description" content="Cursos O4S - Projeto Ser Sustentável - ADMIN" />
+		<link rel="icon" href="/favicon.ico" />
+	</Head>
+);
+
+export default Header;

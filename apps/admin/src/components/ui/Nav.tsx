@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 import Brand from "./Brand";
 import DarkModeHandler from "./DarkModeHandler";
-import NavLink from "./NavLink";
+
 
 const Nav = () => {
   const menuBtnEl = useRef();
@@ -142,9 +143,9 @@ const Nav = () => {
                 <DarkModeBtn />
               </li>
               <li>
-                <NavLink
-                  href="/logout"
-                  className="flex items-center justify-center gap-x-1 rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 active:bg-gray-900"
+                <button
+                  onClick={() => void signOut()}
+                  className="py-2.5 px-4 text-center rounded-lg duration-150 flex items-center justify-center gap-x-1 rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 active:bg-gray-900"
                 >
                   Sair
                   <svg
@@ -159,7 +160,7 @@ const Nav = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </NavLink>
+                </button>
               </li>
             </ul>
           </div>

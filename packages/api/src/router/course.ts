@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 import slugify from "@sindresorhus/slugify";
 
@@ -21,6 +24,12 @@ export const courseRouter = createTRPCRouter({
 					name: true,
 					description: true,
 					published: true,
+					_count: {
+						select: {
+							lessons: true,
+							students: true,
+						},
+					},
 				}
 			});
 		}),

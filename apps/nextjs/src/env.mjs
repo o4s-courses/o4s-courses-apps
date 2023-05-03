@@ -21,8 +21,17 @@ export const env = createEnv({
       process.env.VERCEL ? z.string() : z.string().url(),
     ),
     // Add `.min(1) on ID and SECRET if you want to make sure they're not empty
-    DISCORD_CLIENT_ID: z.string(),
-    DISCORD_CLIENT_SECRET: z.string(),
+    EMAIL_SERVER_HOST: z.string().min(1),
+		EMAIL_SERVER_PORT: z.number(),
+		EMAIL_SERVER_USER: z.string(),
+		EMAIL_SERVER_PASSWORD: z.string(),
+		EMAIL_FROM: z.string().min(1),
+		// Redis cache
+		CACHE_HOST: z.string().min(1),
+		CACHE_PORT: z.number(),
+		CACHE_USER: z.string().min(1),
+		CACHE_PASSWORD: z.string().min(1),
+		CACHE_DATABASE: z.number(),
   },
   /**
    * Specify your client-side environment variables schema here.
@@ -39,8 +48,16 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
-    DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
+    EMAIL_SERVER_HOST: process.env.EMAIL_SERVER_HOST,
+		EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT,
+		EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
+		EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
+		EMAIL_FROM: process.env.EMAIL_FROM,
+		CACHE_HOST: process.env.CACHE_HOST,
+		CACHE_PORT: process.env.CACHE_PORT,
+		CACHE_USER: process.env.CACHE_USER,
+		CACHE_PASSWORD: process.env.CACHE_PASSWORD,
+		CACHE_DATABASE: process.env.CACHE_DATABASE,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
 });

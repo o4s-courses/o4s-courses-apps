@@ -49,11 +49,12 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
-    DATABASE_URL: process.env.DATABASE_URL,
-    NODE_ENV: process.env.NODE_ENV,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    EMAIL_SERVER_HOST: process.env.EMAIL_SERVER_HOST,
+		DATABASE_URL: process.env.DATABASE_URL,
+		DATABASE_DIRECT_URL: process.env.DATABASE_DIRECT_URL,
+		NODE_ENV: process.env.NODE_ENV,
+		NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+		NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+		EMAIL_SERVER_HOST: process.env.EMAIL_SERVER_HOST,
 		EMAIL_SERVER_PORT: process.env.EMAIL_SERVER_PORT,
 		EMAIL_SERVER_USER: process.env.EMAIL_SERVER_USER,
 		EMAIL_SERVER_PASSWORD: process.env.EMAIL_SERVER_PASSWORD,
@@ -66,6 +67,5 @@ export const env = createEnv({
 		GHOST_CONTENT_API_KEY: process.env.GHOST_CONTENT_API_KEY,
 		GHOST_ADMIN_API_KEY: process.env.GHOST_ADMIN_API_KEY,
 		GHOST_API_URL: process.env.GHOST_API_URL,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
-  },
+	},
 });

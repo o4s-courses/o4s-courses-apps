@@ -7,8 +7,8 @@ type Props = {
 const Brand = ({ className }: Props) => (
   <Image
     src="/logoO4S-01.png"
-    width={130}
-    height={40}
+    width={75}
+    height={20}
     alt="O4S - Open for Sustainability"
 		className={className}
   />
