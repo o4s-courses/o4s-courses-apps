@@ -1,4 +1,3 @@
-import { api, type RouterOutputs } from "~/utils/api";
 
 type Props = {
   courses: {
@@ -35,27 +34,25 @@ export const TableCourses = ({ courses }: Props) => {
 							<table className="w-full table-auto text-sm text-left">
 									<thead className="text-gray-600 font-medium border-b">
 											<tr>
-													<th className="py-3 pr-6">ID</th>
-													<th className="py-3 pr-6">Nome</th>
-													<th className="py-3 pr-6">Descrição</th>
-													<th className="py-3 pr-6">Estado</th>
-													<th className="py-3 pr-6">price</th>
-													<th className="py-3 pr-6"></th>
+													<th className="py-3 pr-5">ID</th>
+													<th className="py-3 pr-5">Nome</th>
+													<th className="py-3 pr-5">Descrição</th>
+													<th className="py-3 pr-5">Estado</th>
+													<th className="py-3 pr-5"></th>
 											</tr>
 									</thead>
 									<tbody className="text-gray-600 divide-y">
 											{
 													courses.map((item, idx) => (
 															<tr key={idx}>
-																	<td className="pr-6 py-4 whitespace-nowrap">{item.id}</td>
-																	<td className="pr-6 py-4 whitespace-nowrap">{item.name}</td>
-																	<td className="pr-6 py-4 whitespace-nowrap">
+																	<td className="pr-5 py-4 whitespace-nowrap">{item.id}</td>
+																	<td className="pr-5 py-4 whitespace-nowrap">{item.name}</td>
+																	<td className="pr-5 py-4 whitespace-nowrap">
 																			<span className={`px-3 py-2 rounded-full font-semibold text-xs ${item.published ? "text-green-600 bg-green-50" : "text-blue-600 bg-blue-50"}`}>
 																					{item.published ? "S" : "N"}
 																			</span>
 																	</td>
-																	<td className="pr-6 py-4 whitespace-nowrap">{item.plan}</td>
-																	<td className="pr-6 py-4 whitespace-nowrap">{item.price}</td>
+																	<td className="pr-5 py-4 whitespace-nowrap">{item.description}</td>
 																	<td className="text-right whitespace-nowrap">
 																			<a href="javascript:void()" className="py-1.5 px-3 text-gray-600 hover:text-gray-500 duration-150 hover:bg-gray-50 border rounded-lg">
 																					Gerir

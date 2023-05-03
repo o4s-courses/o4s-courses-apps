@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const Footer = () => {
 
 	const footerNavs = [
@@ -27,10 +29,10 @@ export const Footer = () => {
 									<ul className="flex flex-wrap items-center gap-4 mt-6 sm:text-sm sm:mt-0">
 											{
 													footerNavs.map((item, idx) => (
-															<li className="text-gray-800 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-200 duration-150">
-																	<a key={idx} href={item.href}>
+															<li key={idx} className="text-gray-800 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-200 duration-150">
+																	<Link href={item.href} >
 																			{item.name}
-																	</a>
+																	</Link>
 															</li>
 													))
 											}

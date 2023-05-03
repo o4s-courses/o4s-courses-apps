@@ -1,6 +1,5 @@
 import Head from "next/head";
 
-import { AppFooter } from "@o4s/ui";
 import Nav from "./Nav";
 import { Footer } from "./Footer";
 

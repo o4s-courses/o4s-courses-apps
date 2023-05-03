@@ -1,8 +1,8 @@
 import "../styles/globals.css";
 import type { ReactElement, ReactNode } from "react";
-import type { NextPage } from "next";
+import type { NextPage } from "next/types";
 import type { AppType, AppProps } from "next/app";
-import type { Session } from "next-auth";
+import type { Session } from "@o4s/auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 
@@ -10,7 +10,7 @@ import Layout from "~/components/layout";
 
 import { api } from "~/utils/api";
 
-export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 

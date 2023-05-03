@@ -143,10 +143,10 @@ const Nav = () => {
               </li>
               <li>
                 <NavLink
-                  href="/login"
+                  href="/logout"
                   className="flex items-center justify-center gap-x-1 rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 active:bg-gray-900"
                 >
-                  Sign in
+                  Sair
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"

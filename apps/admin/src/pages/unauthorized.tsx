@@ -1,6 +1,6 @@
 import { signOut } from "next-auth/react";
 
-export default () => {
+export const Unauthorized = () => {
   return (
     <main>
       <div className="mx-auto flex h-screen max-w-screen-xl items-center justify-start px-4 md:px-8">

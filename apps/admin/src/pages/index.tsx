@@ -1,4 +1,5 @@
-import type { GetServerSideProps, NextPage } from "next/types";
+import { type NextPage } from "next/types";
+import SectionWrapper from "~/components/SectionWrapper";
 import { api, type RouterOutputs } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -13,7 +14,7 @@ const Home: NextPage = () => {
     };
   };
 
-	if (session.user.role !== 'admin') {
+	if (!(session.user.role === "admin")) {
 		return {
       redirect: {
         destination: "/unauthorized",
@@ -22,15 +23,16 @@ const Home: NextPage = () => {
     };
 	};
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const courseQuery = api.course.byAuthor.useQuery();
 
-	const deleteCourseMutation = api.course.delete.useMutation({
-    onSettled: () => courseQuery.refetch(),
-  });
 
 	return (
+		<SectionWrapper className="mt-12 dark:mt-0">
+			
+		</SectionWrapper>
 
 	);
-}
+};
 
 export default Home;
