@@ -6,9 +6,9 @@ import Redis from "ioredis";
 const redis = new Redis({
   port: Number(process.env.CACHE_PORT), // Redis port
   host: String(process.env.CACHE_HOST), // Redis host
-  username: "default", // needs Redis >= 6
+  username: String(process.env.CACHE_USER), // needs Redis >= 6
   password: String(process.env.CACHE_PASSWORD),
-  db: 0, // Defaults to 0
+  db: Number(process.env.CACHE_DATABASE), // Defaults to 0
 });
 
 const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({

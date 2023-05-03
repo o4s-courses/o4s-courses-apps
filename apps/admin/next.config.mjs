@@ -7,12 +7,8 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-  swcMinify: true,
-  images: {
-    domains: ["joseantcordeiro.hopto.org"],
-  },
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@o4s/ui", "@o4s/auth", "@o4s/db", "o4s/ghost"],
+  transpilePackages: ["@o4s/ui", "@o4s/api", "@o4s/auth", "@o4s/db"],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: !!process.env.CI },
   typescript: { ignoreBuildErrors: !!process.env.CI },

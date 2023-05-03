@@ -1,20 +1,9 @@
-import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useJitsu } from "@jitsu/nextjs";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
-  const { id, trackPageView, track } = useJitsu();
-
-  useEffect(() => {
-    if (session) {
-      id({ id: session.user.id, email: session.user.email });
-    } else {
-      trackPageView(); // send pageview event
-    }
-  }, [id, session, trackPageView]);
 
   return (
     <>

@@ -1,8 +1,8 @@
 packages:
+  - apps/admin
   - apps/courses
   - apps/web
-  - apps/expo
-  - apps/nextjs
+  - packages/ui
   - packages/api
   - packages/auth
   - packages/db

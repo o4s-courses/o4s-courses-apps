@@ -13,6 +13,7 @@ declare namespace NodeJS {
 		CACHE_PORT: number;
 		CACHE_USER: string;
 		CACHE_PASSWORD: string;
+		CACHE_DATABASE: number;
     GHOST_CONTENT_API_KEY: string;
     GHOST_ADMIN_API_KEY: string;
     GHOST_API_URL: string;

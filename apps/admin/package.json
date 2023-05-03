@@ -1,7 +1,6 @@
 {
-  "name": "@o4s/courses",
+  "name": "@o4s/nextjs",
   "version": "0.1.0",
-  "author": "José Cordeiro <joseantcordeiro@gmail.com>",
   "private": true,
   "scripts": {
     "build": "pnpm with-env next build",
@@ -15,25 +14,24 @@
   },
   "dependencies": {
 		"@o4s/ui": "^0.1.0",
+    "@o4s/api": "^0.1.0",
     "@o4s/auth": "^0.1.0",
     "@o4s/db": "^0.1.0",
-    "@o4s/ghost": "^0.1.0",
-    "@o4s/app-config": "^0.1.0",
     "@o4s/tailwind-config": "^0.1.0",
+    "@t3-oss/env-nextjs": "^0.2.2",
     "@tanstack/react-query": "^4.29.5",
+    "@trpc/client": "^10.23.0",
+    "@trpc/next": "^10.23.0",
+    "@trpc/react-query": "^10.23.0",
+    "@trpc/server": "^10.23.0",
     "next": "^13.3.4",
+		"next-themes": "^0.2.1",
     "next-auth": "^4.22.1",
-    "next-seo": "^6.0.0",
-    "nodemailer": "^6.9.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@jitsu/nextjs": "^3.1.5",
-    "clsx": "^1.2.1",
-    "daisyui": "^2.51.6",
-    "react-hot-toast": "^2.4.1",
-    "react-hook-form": "^7.43.9",
-    "react-textarea-autosize": "^8.4.1",
-    "@sindresorhus/slugify": "^2.2.0"
+		"react-hot-toast": "^2.4.1",
+    "superjson": "1.12.3",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@o4s/eslint-config": "^0.1.0",
@@ -44,6 +42,7 @@
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.39.0",
     "postcss": "^8.4.23",
+		"@tailwindcss/typography": "^0.5.9",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4"
   }

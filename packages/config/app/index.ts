@@ -13,3 +13,11 @@ export const PublicFooterNavigation = [
     { name: "Privacy Policy", href: "/" },
     { name: "About us", href: "/" },
 ];
+
+export const navigation = [
+	{ name: "MOOC O4S", href: "/#features" },
+	{ name: "Cursos", href: "/cursos/sustentabilidade" },
+	{ name: "Ajuda", href: "/ajuda" },
+	{ name: "Preço", href: "/#pricing" },
+	{ name: "Blogue", href: "/blogue" },
+];
