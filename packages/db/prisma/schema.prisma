@@ -79,7 +79,7 @@ model Subscription {
 model Course {
   id          Int      				@id @default(autoincrement())
   name        String
-  description String
+  description String					@db.VarChar(2000)
   slug        String
 	published   Boolean  				@default(false)
 	created  		DateTime 				@default(now())
