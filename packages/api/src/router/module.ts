@@ -1,16 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { z } from "zod";
 import slugify from "@sindresorhus/slugify";
 
 import { createTRPCRouter, adminProcedure, publicProcedure } from "../trpc";
 
-export const courseRouter = createTRPCRouter({
+export const lessonRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.course.findMany({ orderBy: { id: "desc" } });
+    return ctx.prisma.lesson.findMany({ orderBy: { id: "desc" } });
   }),
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.course.findFirst({ where: { id: input.id } });
+      return ctx.prisma.lesson.findFirst({ where: { id: input.id } });
     }),
 	byAuthor: adminProcedure
 		.query(({ ctx }) => {
@@ -33,18 +36,17 @@ export const courseRouter = createTRPCRouter({
   create: adminProcedure
     .input(
       z.object({
+				courseId: z.number(),
         name: z.string().min(1),
-        description: z.string().min(1),
       }),
     )
     .mutation(({ ctx, input }) => {
-			const id = ctx.session?.user?.id;
-      return ctx.prisma.course.create({
+			const id = input.courseId;
+      return ctx.prisma.module.create({
 						data: {
 							name: input.name,
-							description: input.description,
 							slug: slugify(input.name),
-							author: {
+							course: {
 								connect: {
 									id
 								}
@@ -53,6 +55,7 @@ export const courseRouter = createTRPCRouter({
 				);
     }),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.prisma.course.delete({ where: { id: input } });
+		const lessons = ctx.prisma.lesson.
+    return ctx.prisma.module.delete({ where: { id: input } });
   }),
 });

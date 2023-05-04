@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
-  directUrl    = env("DATABASE_DIRECT_URL")
+  // directUrl    = env("DATABASE_DIRECT_URL")
   relationMode = "prisma"
 }
 
@@ -50,7 +50,6 @@ model User {
   accounts         Account[]
   sessions         Session[]
   courses          Course[]
-  posts            Post[]
   completedLessons UserLessonProgress[]
   subscriptions    Subscription[]
 }
@@ -78,45 +77,52 @@ model Subscription {
 }
 
 model Course {
-  id          Int      @id @default(autoincrement())
+  id          Int      				@id @default(autoincrement())
   name        String
   description String
   slug        String
+	published   Boolean  				@default(false)
+	created  		DateTime 				@default(now())
+	modules			Module[]
   lessons     Lesson[]
-  author      User     @relation(fields: [authorId], references: [id])
+  author      User     				@relation(fields: [authorId], references: [id])
   authorId    String
   students    Subscription[]
   products    Product[]
-  published   Boolean  @default(false)
 
   @@index([authorId])
+}
+
+model Module {
+	id             Int                  @id @default(autoincrement())
+  name           String
+	slug           String
+	pos						 Int									@default(0)
+	course         Course               @relation(fields: [courseId], references: [id])
+  courseId       Int
+	lessons     	 Lesson[]
+
+  @@index([courseId])
 }
 
 model Lesson {
   id             Int                  @id @default(autoincrement())
   name           String
-  description    String
   slug           String
+	pos						 Int									@default(0)
   course         Course               @relation(fields: [courseId], references: [id])
   courseId       Int
-  post           Post?
+	module				 Module								@relation(fields: [moduleId], references: [id])
+	moduleId			 Int
+  html       		 String?  						@db.LongText
+  coverImage 		 String?  						@db.VarChar(2000)
+  status     		 String   						@default("draft") @db.VarChar(50)
+	created  			 DateTime 						@default(now())
+	updated				 DateTime							@updatedAt
   usersCompleted UserLessonProgress[]
 
   @@index([courseId])
-}
-
-model Post {
-  id         Int      @id @default(autoincrement())
-  lesson     Lesson?  @relation(fields: [lessonId], references: [id])
-  lessonId   Int?     @unique
-  owner      User     @relation(fields: [ownerId], references: [id])
-  ownerId    String
-  postId     String?  @unique @db.VarChar(24)
-  html       String?  @db.LongText
-  coverImage String?  @db.VarChar(2000)
-  status     String   @default("draft") @db.VarChar(50)
-
-  @@index([ownerId])
+	@@index([moduleId])
 }
 
 model UserLessonProgress {
