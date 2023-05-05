@@ -38,19 +38,23 @@ const LessonEditor: React.FC<{
           height: 500,
           menubar: true,
           plugins: [
-            'advlist', 'autolink', 'autoresize', 'lists', 'link', 'image', 'charmap',
-            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+            'advlist', 'autolink', 'emoticons', 'autoresize', 'lists', 'link', 'image', 'charmap',
+            'anchor', 'nonbreaking', 'searchreplace', 'visualblocks', 'visualchars', 'code', 'fullscreen',
             'insertdatetime', 'media', 'table', 'preview', 'help', 'wordcount'
           ],
 					autoresize_overflow_padding: 0,
+					image_caption: true,
           toolbar: 'undo redo | blocks | ' +
             'bold italic forecolor | alignleft aligncenter ' +
             'alignright alignjustify | bullist numlist outdent indent | ' +
-            'removeformat | help',
-          content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+						'link | image media | nonbreaking | ' +
+            'removeformat | fullscreen preview | help',
+          content_style: 'body { font-size:14px }'
         }}
       />
-      <button onClick={save} className='inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>Save editor content</button>
+			<div className="mt-5 flex lg:ml-4 lg:mt-0">
+      	<button onClick={save} className='inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>Save editor content</button>
+			</div>
     </>
   );
 };
