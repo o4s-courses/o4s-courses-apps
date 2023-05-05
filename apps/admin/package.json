@@ -32,6 +32,8 @@
 		"react-hot-toast": "^2.4.1",
 		"@heroicons/react": "^2.0.17",
 		"@headlessui/react": "^1.7.14",
+		"@ckeditor/ckeditor5-react": "^6.0.0",
+		"@ckeditor/ckeditor5-build-classic": "^37.1.0",
     "superjson": "1.12.3",
     "zod": "^3.21.4"
   },

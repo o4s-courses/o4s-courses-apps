@@ -12,10 +12,10 @@ const redis = new Redis({
 });
 
 const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
-  // models: [
-    // { model: "User", excludeMethods: ["findMany"] },
+  models: [
+    { model: "Lesson", excludeMethods: ["findFirst"] },
     // { model: "Post", cacheTime: 180, cacheKey: "lesson" },
-  // ],
+  ],
   storage: { type: "redis", options: { client: redis, invalidation: { referencesTTL: 300 }, log: console } },
   cacheTime: 300,
   excludeModels: ["Session"],

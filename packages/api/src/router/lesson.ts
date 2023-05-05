@@ -12,6 +12,19 @@ export const lessonRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.lesson.findFirst({ where: { id: input.id } });
     }),
+	getContent: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.lesson.findFirst({
+				where: { id: input.id },
+				select: {
+					id: true,
+					name: true,
+					html: true,
+					status: true,
+				},
+			});
+  }),
 	byAuthor: adminProcedure
 		.query(({ ctx }) => {
 			return ctx.prisma.course.findMany({
@@ -50,6 +63,21 @@ export const lessonRouter = createTRPCRouter({
 					}
 				);
     }),
+	saveHTML: adminProcedure
+		.input(
+			z.object({
+				id: z.number(),
+				html: z.string(),
+			}),
+		)
+		.mutation(({ ctx, input }) => {
+			return ctx.prisma.lesson.update({
+				where: { id: input.id },
+				data: {
+					html: input.html,
+				}
+			});
+		}),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.prisma.lesson.delete({ where: { id: input } });
   }),
