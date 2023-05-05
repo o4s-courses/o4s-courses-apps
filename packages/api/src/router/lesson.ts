@@ -34,23 +34,20 @@ export const lessonRouter = createTRPCRouter({
     .input(
       z.object({
 				courseId: z.number(),
+				moduleId: z.number(),
         name: z.string().min(1),
-        description: z.string().min(1),
       }),
     )
     .mutation(({ ctx, input }) => {
-			const id = input.courseId;
+			const id = input.moduleId;
       return ctx.prisma.lesson.create({
 						data: {
 							name: input.name,
-							description: input.description,
 							slug: slugify(input.name),
-							course: {
-								connect: {
-									id
-								}
-							}
-						}}
+							courseId: input.courseId,
+							moduleId: input.moduleId,
+						}
+					}
 				);
     }),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {

@@ -8,7 +8,7 @@ import slugify from "@sindresorhus/slugify";
 import { createTRPCRouter, adminProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
-export const lessonRouter = createTRPCRouter({
+export const moduleRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.lesson.findMany({ orderBy: { id: "desc" } });
   }),
@@ -17,19 +17,20 @@ export const lessonRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.prisma.lesson.findFirst({ where: { id: input.id } });
     }),
-	byAuthor: adminProcedure
-		.query(({ ctx }) => {
-			return ctx.prisma.course.findMany({
-				where: { authorId: ctx.session.user.id },
+	byCourse: adminProcedure
+		.input(z.object({ id: z.number() }))
+		.query(({ ctx, input }) => {
+			return ctx.prisma.module.findMany({
+				where: { courseId: input.id },
 				select: {
 					id: true,
 					name: true,
-					description: true,
-					published: true,
-					_count: {
+					courseId: true,
+					lessons: {
 						select: {
-							lessons: true,
-							students: true,
+							id: true,
+							name: true,
+							status: true,
 						},
 					},
 				}

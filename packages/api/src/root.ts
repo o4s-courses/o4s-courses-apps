@@ -1,11 +1,13 @@
 import { authRouter } from "./router/auth";
-import { postRouter } from "./router/post";
+import { moduleRouter } from "./router/module";
 import { courseRouter } from "./router/course";
 import { createTRPCRouter } from "./trpc";
+import { lessonRouter } from "./router/lesson";
 
 export const appRouter = createTRPCRouter({
 	course: courseRouter,
-  post: postRouter,
+  module: moduleRouter,
+	lesson: lessonRouter,
   auth: authRouter,
 });
 

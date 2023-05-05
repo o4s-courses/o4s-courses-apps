@@ -2,6 +2,8 @@ import { useState } from "react";
 import { api, type RouterOutputs } from "~/utils/api";
 import toast from "react-hot-toast";
 
+import Loading from "~/components/ui/Loading";
+
 const CreateCourseForm: React.FC = () => {
   const utils = api.useContext();
 
@@ -12,19 +14,19 @@ const CreateCourseForm: React.FC = () => {
     async onSuccess() {
       setName("");
       setDescription("");
-			toast.success("Curso criado com sucesso.");
+			toast.success("Course created successfully");
       await utils.course.byAuthor.invalidate();
     },
-		onError(error, variables, context) {
-			// An error happened!
-			toast.error(`ERROR ${error}`);
+		onError(error) {
+			console.error(error);
+      toast.error("Something went wrong");
 		},
   });
 
   return (
     <div className="flex w-full max-w-2xl flex-col p-4">
       <input
-        className="mb-2 rounded bg-white/10 p-2 text-white"
+        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
@@ -35,7 +37,7 @@ const CreateCourseForm: React.FC = () => {
         </span>
       )}
       <input
-        className="mb-2 rounded bg-white/10 p-2 text-white"
+        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
@@ -46,7 +48,7 @@ const CreateCourseForm: React.FC = () => {
         </span>
       )}
       <button
-        className="rounded bg-pink-400 p-2 font-bold"
+        className="block w-full text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
         onClick={() => {
           mutate({
             name,
@@ -54,7 +56,7 @@ const CreateCourseForm: React.FC = () => {
           });
         }}
       >
-        Adicionar novo curso
+        Add new course
       </button>
     </div>
   );
@@ -69,7 +71,9 @@ const CourseCard: React.FC<{
       <div className="flex-grow">
         <h2 className="text-2xl font-bold text-pink-400">{course.name}</h2>
         <p className="mt-2 text-sm">{course.description}</p>
-				<p className="mt-2 text-sm">Lessons: {course._count.lessons} | Students: {course._count.students}</p>
+				<p className="mt-2 text-sm font-bold">
+					Modules: {course._count.modules} | Lessons: {course._count.lessons} | Students: {course._count.students}
+				</p>
       </div>
       <div>
         <span
@@ -114,7 +118,7 @@ const TableCourses = () => {
         )}
       </div>
     ) : (
-      <p>Loading...</p>
+      <Loading />
     )}
 		</>
 	)

@@ -10,7 +10,26 @@ export const courseRouter = createTRPCRouter({
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.course.findFirst({ where: { id: input.id } });
+      return ctx.prisma.course.findFirst({
+				where: { id: input.id },
+				select: {
+					id: true,
+					name: true,
+					published: true,
+					modules: {
+						select: {
+							id: true,
+							name: true,
+							lessons: {
+								select: {
+									id: true,
+									name: true
+								},
+							},
+						},
+					},
+				},
+			});
     }),
 	byAuthor: adminProcedure
 		.query(({ ctx }) => {
@@ -23,6 +42,7 @@ export const courseRouter = createTRPCRouter({
 					published: true,
 					_count: {
 						select: {
+							modules: true,
 							lessons: true,
 							students: true,
 						},
