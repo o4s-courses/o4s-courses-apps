@@ -49,3 +49,6 @@ yarn-error.log*
 
 # Git Workflows
 .github/workflows/
+
+# ... other rules omitted for brevity ...
+tinymce

@@ -7,6 +7,7 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
+		PUBLIC_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
 		DATABASE_DIRECT_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]),
@@ -49,6 +50,7 @@ export const env = createEnv({
    * Destructure all variables from `process.env` to make sure they aren't tree-shaken away.
    */
   runtimeEnv: {
+		PUBLIC_URL: process.env.PUBLIC_URL,
 		DATABASE_URL: process.env.DATABASE_URL,
 		DATABASE_DIRECT_URL: process.env.DATABASE_DIRECT_URL,
 		NODE_ENV: process.env.NODE_ENV,
