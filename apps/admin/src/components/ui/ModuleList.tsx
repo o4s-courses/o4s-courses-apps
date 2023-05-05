@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -31,9 +32,9 @@ const CreateModuleForm: React.FC<{ courseId: number; }> = ({ courseId }) => {
   });
 
   return (
-    <div className="flex w-full max-w-2xl flex-col p-4">
+    <div className="flex items-center border-b border-teal-500 pb-2">
       <input
-        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
+        className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none p-2 dark:text-gray-400 text-gray-700"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
@@ -44,7 +45,7 @@ const CreateModuleForm: React.FC<{ courseId: number; }> = ({ courseId }) => {
         </span>
       )}
       <button
-        className="block w-full text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
+        className="block w-2/5 text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
         onClick={() => {
           mutate({
 						courseId,
@@ -79,9 +80,9 @@ const CreateLessonForm: React.FC<{
   });
 
   return (
-    <div className="flex w-full max-w-2xl flex-col p-4">
+    <div className="flex items-center border-b border-teal-500 pb-2">
       <input
-        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
+        className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none p-2 dark:text-gray-400 text-gray-700"
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Name"
@@ -92,7 +93,7 @@ const CreateLessonForm: React.FC<{
         </span>
       )}
       <button
-        className="block w-full text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
+        className="block w-2/5 text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
         onClick={() => {
           mutate({
 						courseId,
@@ -143,17 +144,24 @@ const ModuleDisclosure: React.FC<{
 								leaveTo="transform scale-95 opacity-0"
 							></Transition>
               <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-							  <CreateLessonForm courseId={module.courseId} moduleId={module.id} />
+								<div className="pb-2">
+							  	<CreateLessonForm courseId={module.courseId} moduleId={module.id} />
+								</div>
 								{module.lessons.length === 0 ? (
 									<span>There are no lessons!</span>
 								) : (
-									<ul>
-									{module.lessons?.map((l) => {
-										return (
-											<li key={l.id}>{l.name} - {l.status}</li>
-										);
-									})}
-									</ul>
+									<table className="table-auto">
+										<tbody>
+										{module.lessons?.map((l) => {
+											return (
+												<tr key={l.id}>
+													<td className="border px-4 py-2">{l.name}</td>
+													<td className="border px-4 py-2">{l.status}</td>
+												</tr>
+											);
+										})}
+										</tbody>
+									</table>
 								)}
               </Disclosure.Panel>
             </>
@@ -174,7 +182,9 @@ const ModulesList = ({ courseId }: Props) => {
 
   return (
 		<>
-		<CreateModuleForm courseId={courseId} />
+		<div className="px-6 pb-6">
+			<CreateModuleForm courseId={courseId} />
+		</div>
 		{moduleQuery.data ? (
       <div className="w-full">
         {moduleQuery.data?.length === 0 ? (

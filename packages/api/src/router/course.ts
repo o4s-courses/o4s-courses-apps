@@ -72,6 +72,18 @@ export const courseRouter = createTRPCRouter({
 						}}
 				);
     }),
+	publish: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
+		return ctx.prisma.course.update({
+			where: { id: input },
+			data: { published: true },
+		});
+	}),
+	unpublish: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
+		return ctx.prisma.course.update({
+			where: { id: input },
+			data: { published: false },
+		});
+	}),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.prisma.course.delete({ where: { id: input } });
   }),

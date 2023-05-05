@@ -2,6 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
+import {
+  LifebuoyIcon,
+} from "@heroicons/react/20/solid";
 
 import Brand from "./Brand";
 import DarkModeHandler from "./DarkModeHandler";
@@ -131,6 +134,15 @@ const Nav = () => {
                   </li>
                 );
               })}
+							<li>
+								<button
+									type="button"
+									className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+								>
+									<LifebuoyIcon className="-ml-0.5 mr-1.5 h-5 w-5" aria-hidden="true" />
+									Ajuda
+								</button>
+							</li>
               <li>
                 <span
                   className={`${addColor(
@@ -145,7 +157,7 @@ const Nav = () => {
               <li>
                 <button
                   onClick={() => void signOut()}
-                  className="py-2.5 px-4 text-center rounded-lg duration-150 flex items-center justify-center gap-x-1 rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 active:bg-gray-900"
+                  className="py-2.5 px-4 text-center rounded-full duration-150 flex items-center justify-center gap-x-1 rounded-full bg-gray-800 text-sm font-medium text-white hover:bg-gray-700 active:bg-gray-900"
                 >
                   Sair
                   <svg
