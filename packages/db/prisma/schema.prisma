@@ -81,7 +81,7 @@ model Course {
   name        String
   description String					@db.VarChar(2000)
   slug        String
-	image				String					@db.VarChar(2000)
+	image				String?					@db.VarChar(2000)
 	published   Boolean  				@default(false)
 	created  		DateTime 				@default(now())
 	modules			Module[]
