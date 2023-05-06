@@ -85,6 +85,9 @@ importers:
       next-themes:
         specifier: ^0.2.1
         version: 0.2.1(next@13.3.4)(react-dom@18.2.0)(react@18.2.0)
+      primeflex:
+        specifier: ^3.3.0
+        version: 3.3.0
       primeicons:
         specifier: ^6.0.1
         version: 6.0.1
@@ -9291,6 +9294,10 @@ packages:
 
   /pretty-format@3.8.0:
     resolution: {integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==}
+    dev: false
+
+  /primeflex@3.3.0:
+    resolution: {integrity: sha512-4hvyIO7lERN5bnyURn67Qpozghins8Jq/GSXO6tymc3oa2ADHWuiYBti8ZptPwHu+uD/HTEisS26NEmeIGfPZQ==}
     dev: false
 
   /primeicons@6.0.1:

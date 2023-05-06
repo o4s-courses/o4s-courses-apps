@@ -1,4 +1,8 @@
 import "../styles/globals.css";
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+import "primeflex/primeflex.css";
 import type { AppType } from "next/app";
 import type { Session } from "@o4s/auth";
 import { ThemeProvider } from "next-themes";

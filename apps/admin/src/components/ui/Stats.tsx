@@ -1,38 +1,70 @@
 const Stats = () => {
 
-	const stats = [
-			{
-					data: "35K",
-					title: "Customers"
-			},
-			{
-					data: "10K+",
-					title: "Downloads"
-			},
-			{
-					data: "40+",
-					title: "Countries"
-			},
-			{
-					data: "30M+",
-					title: "Total revenue"
-			},
-	]
-
 	return (
 
-					<div className="max-w-screen-xl mx-auto px-4 md:px-8">
-							<ul className="flex flex-col items-center justify-center gap-x-12 gap-y-10 sm:flex-row sm:flex-wrap md:gap-x-24">
-									{
-											stats.map((item, idx) => (
-													<li key={idx} className="text-center">
-															<h4 className="text-4xl text-gray-800 dark:text-gray-500 font-semibold">{item.data}</h4>
-															<p className="mt-3 text-gray-600 dark:text-gray-300 font-medium">{item.title}</p>
-													</li>
-											))
-									}
-							</ul>
-					</div>
+		<div className="grid">
+				<div className="col-12 md:col-6 lg:col-3">
+						<div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+								<div className="flex justify-content-between mb-3">
+										<div>
+												<span className="block text-500 font-medium mb-3">Orders</span>
+												<div className="text-900 font-medium text-xl">152</div>
+										</div>
+										<div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+												<i className="pi pi-shopping-cart text-blue-500 text-xl"></i>
+										</div>
+								</div>
+								<span className="text-green-500 font-medium">24 new </span>
+								<span className="text-500">since last visit</span>
+						</div>
+				</div>
+				<div className="col-12 md:col-6 lg:col-3">
+						<div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+								<div className="flex justify-content-between mb-3">
+										<div>
+												<span className="block text-500 font-medium mb-3">Revenue</span>
+												<div className="text-900 font-medium text-xl">$2.100</div>
+										</div>
+										<div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+												<i className="pi pi-map-marker text-orange-500 text-xl"></i>
+										</div>
+								</div>
+								<span className="text-green-500 font-medium">%52+ </span>
+								<span className="text-500">since last week</span>
+						</div>
+				</div>
+				<div className="col-12 md:col-6 lg:col-3">
+						<div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+								<div className="flex justify-content-between mb-3">
+										<div>
+												<span className="block text-500 font-medium mb-3">Customers</span>
+												<div className="text-900 font-medium text-xl">28441</div>
+										</div>
+										<div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+												<i className="pi pi-inbox text-cyan-500 text-xl"></i>
+										</div>
+								</div>
+								<span className="text-green-500 font-medium">520  </span>
+								<span className="text-500">newly registered</span>
+						</div>
+				</div>
+				<div className="col-12 md:col-6 lg:col-3">
+						<div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+								<div className="flex justify-content-between mb-3">
+										<div>
+												<span className="block text-500 font-medium mb-3">Comments</span>
+												<div className="text-900 font-medium text-xl">152 Unread</div>
+										</div>
+										<div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+												<i className="pi pi-comment text-purple-500 text-xl"></i>
+										</div>
+								</div>
+								<span className="text-green-500 font-medium">85 </span>
+								<span className="text-500">responded</span>
+						</div>
+				</div>
+		</div>
+    
 
 	);
 };
