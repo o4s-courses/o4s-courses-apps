@@ -5,8 +5,9 @@ import { api, type RouterOutputs } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
-import Footer from "~/components/ui/Footer";
 import TableCourses from "~/components/TableCourses";
+import Stats from "~/components/ui/Stats";
+import HomeHeader from "~/components/ui/HomeHeader";
 
 type Props = {
 	session: Session;
@@ -19,10 +20,11 @@ const Home: NextPage<Props> = ({ isAdmin }) => {
 	return (
 		<><Header title="Cursos - Admin" />
 			<Nav />
-			<SectionWrapper className="mt-12 dark:mt-0">
+			<SectionWrapper className="mt-0">
+				<Stats />
+				<HomeHeader />
 				<TableCourses />
 			</SectionWrapper>
-			<Footer />
 		</>
 	);
 };
