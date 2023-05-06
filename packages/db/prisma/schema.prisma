@@ -121,7 +121,7 @@ model Lesson {
   coverImage 		 String?  						@db.VarChar(2000)
   status     		 String   						@default("draft") @db.VarChar(50)
 	createdAt			 DateTime 						@default(now())
-	updatedAt			 DateTime							@updatedAt
+	updatedAt			 DateTime?						@updatedAt
 	deleted				 Boolean							@default(false)
   usersCompleted UserLessonProgress[]
 
