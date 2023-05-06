@@ -36,13 +36,15 @@ export const moduleRouter = createTRPCRouter({
 					name: true,
 					courseId: true,
 					lessons: {
+						where: { deleted: false, },
+						orderBy: { pos: 'asc', },
 						select: {
 							id: true,
 							name: true,
 							status: true,
 						},
 					},
-				}
+				},
 			});
 		}),
 	setPos: adminProcedure
@@ -88,16 +90,21 @@ export const moduleRouter = createTRPCRouter({
 				);
     }),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
-		const lessons = ctx.prisma.lesson.updateMany({
-			where: {
-				moduleId: input,
-				deleted: false,
-			},
-			data: { deleted: true },
-		});
     return ctx.prisma.module.update({
 			where: { id: input },
-			data: { deleted: true },
+			data: {
+				deleted: true,
+				lessons: {
+					updateMany: {
+						where: {
+							deleted: false,
+						},
+						data: {
+							deleted: true,
+						},
+					},
+				},
+			},
 		});
   }),
 });

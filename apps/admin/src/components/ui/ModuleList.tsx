@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import { Accordion, AccordionTab } from "primereact/accordion";
 import { Timeline } from 'primereact/timeline';
-import { OrderList } from "primereact/orderlist";
 import { Toast } from "primereact/toast";
 import { api, type RouterOutputs } from "~/utils/api";
 import Loading from "./Loading";
@@ -10,7 +9,6 @@ type Props = {
 	courseId: number;
 };
 
-type Module = RouterOutputs["module"]["byCourse"][number];
 type Modules = RouterOutputs["module"]["byCourse"];
 
 const CreateModuleForm: React.FC<{ courseId: number; }> = ({ courseId }) => {
@@ -111,33 +109,6 @@ const CreateLessonForm: React.FC<{
     </div>
 		</>
   );
-};
-
-const ModulesOrderList: React.FC<{
-  modules: Modules;
-}> = ({ modules }) => {
-	
-	const itemTemplate = (item: Module) => {
-			return (
-					<div className="flex flex-wrap p-2 align-items-center gap-3">
-							
-							<div className="flex-1 flex flex-column gap-2 xl:mr-8">
-									<span className="font-bold">{item.name}</span>
-									<div className="flex align-items-center gap-2">
-											<i className="pi pi-tag text-sm"></i>
-											<span>Something</span>
-									</div>
-							</div>
-							<span className="font-bold text-900">Delete</span>
-					</div>
-			);
-	};
-	
-	return (
-			<div className="card xl:flex xl:justify-content-center">
-					<OrderList value={modules} onChange={(e) => setProducts(e.value)} itemTemplate={itemTemplate} header="Products" dragdrop></OrderList>
-			</div>
-	)
 };
 
 const Modules: React.FC<{
