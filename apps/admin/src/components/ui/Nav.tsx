@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { Menubar } from 'primereact/menubar';
 import { InputText } from 'primereact/inputtext';
 import { signOut } from "next-auth/react";
@@ -7,25 +7,22 @@ import { signOut } from "next-auth/react";
 import Brand from "./Brand";
 
 export default function Nav() {
+	const router = useRouter();
     const items = [
         {
+						label: 'Home',
+						icon: 'pi pi-fw pi-home',
+						command: () => { void router.push('/'); },
+				},
+				{
             label: 'Course',
             icon: 'pi pi-fw pi-file',
             items: [
                 {
                     label: 'New',
                     icon: 'pi pi-fw pi-plus',
-                    items: [
-                        {
-                            label: 'Bookmark',
-                            icon: 'pi pi-fw pi-bookmark'
-                        },
-                        {
-                            label: 'Video',
-                            icon: 'pi pi-fw pi-video'
-                        },
-
-                    ]
+                    command: () => { void router.push("/courses/new"); },
+										
                 },
                 {
                     label: 'Delete',
@@ -131,18 +128,19 @@ export default function Nav() {
         },
         {
             label: 'Quit',
-            icon: 'pi pi-fw pi-power-off'
+            icon: 'pi pi-fw pi-power-off',
+						command: () => { void signOut(); },
         }
     ];
 
-    const start = <Brand className="mr-2"></Brand>;
-    const end = <InputText placeholder="Search" type="text" className="w-full" />;
+  const start = <Brand className="mr-2"></Brand>;
+  const end = <InputText placeholder="Search" type="text" className="w-full" />;
 
-    return (
-			<header>
-        <div className="card">
-            <Menubar model={items} start={start} end={end} />
-        </div>
-			</header>
-    )
+  return (
+		<header>
+      <div className="card">
+        <Menubar model={items} start={start} end={end} />
+      </div>
+		</header>
+  )
 }

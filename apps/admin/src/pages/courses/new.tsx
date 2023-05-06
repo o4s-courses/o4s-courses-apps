@@ -1,65 +1,84 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { api } from "~/utils/api";
-import toast from "react-hot-toast";
+import { Toast } from "primereact/toast";
+import { InputText } from "primereact/inputtext";
+import { InputTextarea } from "primereact/inputtextarea";
+import { Button } from 'primereact/button';
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
 import SectionWrapper from "~/components/SectionWrapper";
 
 const CreateCourseForm: React.FC = () => {
 	const router = useRouter();
+	const toast = useRef<Toast>(null);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+	const [image, setImage] = useState("");
 
   const { mutate, error } = api.course.create.useMutation({
     onSuccess() {
       setName("");
       setDescription("");
-			toast.success("Course created successfully");
+			setImage("");
+			toast.current?.show({severity:'success', summary: 'Success', detail:'Course created successfully', life: 6000});
 			void router.push("/");
     },
 		onError(error) {
 			console.error(error);
-      toast.error("Something went wrong");
+			toast.current?.show({severity:'error', summary: 'Error', detail:'Something went wrong', life: 6000});
 		},
   });
 
   return (
-    <div className="flex w-full max-w-2xl flex-col p-4">
-      <input
-        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-      />
-      {error?.data?.zodError?.fieldErrors.name && (
-        <span className="mb-2 text-red-500">
-          {error.data.zodError.fieldErrors.name}
-        </span>
-      )}
-      <input
-        className="mb-2 rounded dark:bg-white/10 p-2 dark:text-white bg-black/10 text-black"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
-      />
-      {error?.data?.zodError?.fieldErrors.description && (
-        <span className="mb-2 text-red-500">
-          {error.data.zodError.fieldErrors.description}
-        </span>
-      )}
-      <button
-        className="block w-full text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
-        onClick={() => {
-          mutate({
-            name,
-            description,
-          });
-        }}
-      >
-        Add new course
-      </button>
-    </div>
+		<><Toast ref={toast} />
+		<div className="card justify-content-center">
+			<div className="field card flex">
+				<span className="p-float-label">
+					<InputText id="name" value={name} onChange={(e) => setName(e.target.value)} rows={5} />
+					<label htmlFor="name">Course name</label>
+				</span>
+			</div>
+			{error?.data?.zodError?.fieldErrors.name && (
+				<span className="mb-2 text-red-500">
+					{error.data.zodError.fieldErrors.name}
+				</span>
+			)}
+			<div className="field card flex">
+				<span className="p-float-label">
+					<InputTextarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={5} cols={30} />
+					<label htmlFor="description">Description</label>
+				</span>
+			</div>
+			{error?.data?.zodError?.fieldErrors.description && (
+				<span className="mb-2 text-red-500">
+					{error.data.zodError.fieldErrors.description}
+				</span>
+			)}
+			<div className="field card flex">
+				<span className="p-float-label">
+					<InputText id="image" value={image} onChange={(e) => setImage(e.target.value)} />
+					<label htmlFor="image">Image</label>
+				</span>
+			</div>
+			{error?.data?.zodError?.fieldErrors.image && (
+				<span className="mb-2 text-red-500">
+					{error.data.zodError.fieldErrors.image}
+				</span>
+			)}
+			<div className="field card flex">
+				<Button
+					onClick={() => {
+						mutate({
+							name,
+							description,
+							image,
+						});
+					} }
+					label="Add new course" raised />
+			</div>
+
+		</div></>
   );
 };
 

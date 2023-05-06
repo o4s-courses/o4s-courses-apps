@@ -1,13 +1,11 @@
 import SectionWrapper from "~/components/SectionWrapper";
 import { type GetServerSideProps, type NextPage } from 'next/types';
 import { getServerSession, type Session } from "@o4s/auth";
-import { api, type RouterOutputs } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
-import TableCourses from "~/components/TableCourses";
+import CoursesList from "~/components/ui/CoursesList";
 import Stats from "~/components/ui/Stats";
-import HomeHeader from "~/components/ui/HomeHeader";
 
 type Props = {
 	session: Session;
@@ -15,15 +13,13 @@ type Props = {
 };
 
 const Home: NextPage<Props> = ({ isAdmin }) => {
-	const { data: session } = api.auth.getSession.useQuery();
 
 	return (
 		<><Header title="Cursos - Admin" />
 			<Nav />
 			<SectionWrapper className="mt-0">
 				<Stats />
-				<HomeHeader />
-				<TableCourses />
+				<CoursesList />
 			</SectionWrapper>
 		</>
 	);

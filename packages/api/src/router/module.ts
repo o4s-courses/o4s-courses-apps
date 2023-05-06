@@ -22,6 +22,7 @@ export const moduleRouter = createTRPCRouter({
 		.query(({ ctx, input }) => {
 			return ctx.prisma.module.findMany({
 				where: { courseId: input.id },
+				orderBy: { pos: 'asc' },
 				select: {
 					id: true,
 					name: true,
@@ -36,6 +37,27 @@ export const moduleRouter = createTRPCRouter({
 				}
 			});
 		}),
+	setPos: adminProcedure
+		.input(
+			z.object({
+				courseId: z.number(),
+				name: z.string().min(1),
+			}),
+		)
+		.mutation(({ ctx, input }) => {
+			const id = input.courseId;
+      return ctx.prisma.module.create({
+						data: {
+							name: input.name,
+							slug: slugify(input.name),
+							course: {
+								connect: {
+									id
+								}
+							}
+						}}
+				);
+    }),
   create: adminProcedure
     .input(
       z.object({

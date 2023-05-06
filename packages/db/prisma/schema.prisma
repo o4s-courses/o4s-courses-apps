@@ -83,7 +83,8 @@ model Course {
   slug        String
 	image				String?					@db.VarChar(2000)
 	published   Boolean  				@default(false)
-	created  		DateTime 				@default(now())
+	createdAt		DateTime 				@default(now())
+	deleted			Boolean					@default(false)
 	modules			Module[]
   lessons     Lesson[]
   author      User     				@relation(fields: [authorId], references: [id])
@@ -95,11 +96,12 @@ model Course {
 }
 
 model Module {
-	id             Int                  @id @default(autoincrement())
+	id             Int      @id @default(autoincrement())
   name           String
 	slug           String
-	pos						 Int									@default(0)
-	course         Course               @relation(fields: [courseId], references: [id])
+	pos						 Int			@default(0)
+	deleted				 Boolean	@default(false)
+	course         Course   @relation(fields: [courseId], references: [id])
   courseId       Int
 	lessons     	 Lesson[]
 
@@ -118,8 +120,9 @@ model Lesson {
   html       		 String?  						@db.LongText
   coverImage 		 String?  						@db.VarChar(2000)
   status     		 String   						@default("draft") @db.VarChar(50)
-	created  			 DateTime 						@default(now())
-	updated				 DateTime							@updatedAt
+	createdAt			 DateTime 						@default(now())
+	updatedAt			 DateTime							@updatedAt
+	deleted				 Boolean							@default(false)
   usersCompleted UserLessonProgress[]
 
   @@index([courseId])

@@ -39,6 +39,7 @@ export const courseRouter = createTRPCRouter({
 					id: true,
 					name: true,
 					description: true,
+					image: true,
 					published: true,
 					_count: {
 						select: {
@@ -54,7 +55,8 @@ export const courseRouter = createTRPCRouter({
     .input(
       z.object({
         name: z.string().min(1),
-        description: z.string().min(1),
+        description: z.string().min(1).max(2000),
+				image: z.string().min(1),
       }),
     )
     .mutation(({ ctx, input }) => {
@@ -64,6 +66,7 @@ export const courseRouter = createTRPCRouter({
 							name: input.name,
 							description: input.description,
 							slug: slugify(input.name),
+							image: input.image,
 							author: {
 								connect: {
 									id
