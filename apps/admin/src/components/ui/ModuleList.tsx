@@ -158,13 +158,12 @@ const Modules: React.FC<{
 												opposite={(item) => item.name}
 												content={(item) => <small className="text-color-secondary">{item.status}</small>} />
 										</div>
-										<div className="card">
-											<CreateLessonForm courseId={m.courseId} moduleId={m.id} />
-										</div>
 									</>
 								)}
+								<div className="card">
+									<CreateLessonForm courseId={m.courseId} moduleId={m.id} />
+								</div>
 							</AccordionTab>
-
 						)
 					})}
 				</Accordion>

@@ -15,13 +15,21 @@ export const moduleRouter = createTRPCRouter({
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.lesson.findFirst({ where: { id: input.id } });
+      return ctx.prisma.lesson.findFirst({
+				where: {
+					id: input.id,
+					deleted: false,
+				}
+			});
     }),
 	byCourse: adminProcedure
 		.input(z.object({ id: z.number() }))
 		.query(({ ctx, input }) => {
 			return ctx.prisma.module.findMany({
-				where: { courseId: input.id },
+				where: {
+					courseId: input.id,
+					deleted: false,
+				},
 				orderBy: { pos: 'asc' },
 				select: {
 					id: true,
@@ -80,19 +88,16 @@ export const moduleRouter = createTRPCRouter({
 				);
     }),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
-		const lessons = ctx.prisma.module.findFirst({
-			where: { id: input },
-			select: {
-				_count: {
-					select: {
-						lessons: true,
-					},
-				},
-			}
+		const lessons = ctx.prisma.lesson.updateMany({
+			where: {
+				moduleId: input,
+				deleted: false,
+			},
+			data: { deleted: true },
 		});
-		if (lessons._count.lessons > 0) {
-			throw new TRPCError({ code: "UNAUTHORIZED" });
-		};
-    return ctx.prisma.module.delete({ where: { id: input } });
+    return ctx.prisma.module.update({
+			where: { id: input },
+			data: { deleted: true },
+		});
   }),
 });
