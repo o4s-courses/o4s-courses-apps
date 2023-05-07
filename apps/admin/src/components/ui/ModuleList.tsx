@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 import { Accordion, AccordionTab } from "primereact/accordion";
-import { Timeline } from 'primereact/timeline';
 import { Toast } from "primereact/toast";
 import { api, type RouterOutputs } from "~/utils/api";
 import Loading from "./Loading";
+import LessonsTable from "./LessonsTable";
 
 type Props = {
 	courseId: number;
@@ -21,7 +21,7 @@ const CreateModuleForm: React.FC<{ courseId: number; }> = ({ courseId }) => {
     async onSuccess() {
       setName("");
 			toast.current?.show({severity:'success', summary: 'Success', detail:'Module created successfully', life: 3000});
-      await utils.module.byCourse.invalidate();
+      await utils.course.byId.invalidate();
     },
 		onError(error) {
 			console.error(error);
@@ -72,7 +72,7 @@ const CreateLessonForm: React.FC<{
     async onSuccess() {
       setName("");
 			toast.current?.show({severity:'success', summary: 'Success', detail:'Lesson created successfully', life: 3000});
-      await utils.module.byCourse.invalidate();
+      await utils.course.byId.invalidate();
     },
 		onError(error) {
 			console.error(error);
@@ -121,17 +121,13 @@ const Modules: React.FC<{
 						return (
 							<AccordionTab key={m.id} header={m.name}>
 								{m.lessons?.length === 0 ? (
-									<p className="m-0">There are no modules!</p>
+									<p className="m-0">There are no lessons!</p>
 								) : (
-									<><div className="card">
-											<Timeline
-												value={m.lessons}
-												opposite={(item) => item.name}
-												content={(item) => <small className="text-color-secondary">{item.status}</small>} />
-										</div>
+									<>
+									<LessonsTable lessons={m.lessons} />
 									</>
 								)}
-								<div className="card">
+								<div className="card p-6">
 									<CreateLessonForm courseId={m.courseId} moduleId={m.id} />
 								</div>
 							</AccordionTab>
@@ -142,8 +138,10 @@ const Modules: React.FC<{
 	)
 };
 
-const ModulesList = ({ courseId }: Props) => {
-	const moduleQuery = api.module.byCourse.useQuery({ id: courseId});
+const ModulesList: React.FC<{
+	courseId: number;
+  modules: Modules;
+}> = ({ courseId, modules }) => {
 
 	const deleteModuleMutation = api.module.delete.useMutation({
     onSettled: () => moduleQuery.refetch(),
@@ -151,17 +149,19 @@ const ModulesList = ({ courseId }: Props) => {
 
   return (
 		<>
-		<div className="px-6 pb-6">
+		<div className="p-6">
 			<CreateModuleForm courseId={courseId} />
 		</div>
-		{moduleQuery.data ? (
+		{modules ? (
+			
       <div className="w-full">
-        {moduleQuery.data?.length === 0 ? (
+        {modules.length === 0 ? (
           <span>There are no modules!</span>
         ) : (
-					<Modules modules={moduleQuery.data} />
+					<Modules modules={modules} />
         )}
       </div>
+			
     ) : (
       <Loading />
     )}

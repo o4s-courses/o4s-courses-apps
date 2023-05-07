@@ -34,6 +34,7 @@ export const moduleRouter = createTRPCRouter({
 				select: {
 					id: true,
 					name: true,
+					pos: true,
 					courseId: true,
 					lessons: {
 						where: { deleted: false, },
@@ -41,6 +42,7 @@ export const moduleRouter = createTRPCRouter({
 						select: {
 							id: true,
 							name: true,
+							pos: true,
 							status: true,
 						},
 					},

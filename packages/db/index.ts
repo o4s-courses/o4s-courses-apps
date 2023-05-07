@@ -1,4 +1,5 @@
-import Prisma from "prisma";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+import type Prisma from "prisma";
 import { PrismaClient } from "@prisma/client";
 import { createPrismaRedisCache } from "prisma-redis-middleware";
 import Redis from "ioredis";
@@ -36,10 +37,8 @@ export * from "./db";
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const prisma =
   globalForPrisma.prisma ||
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   new PrismaClient({
     log:
       process.env.NODE_ENV === "development"
@@ -47,8 +46,7 @@ export const prisma =
         : ["error"],
   });
 
-prisma.$use(cacheMiddleware);
+if (!process.env.IS_ADMIN) prisma.$use(cacheMiddleware);
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 

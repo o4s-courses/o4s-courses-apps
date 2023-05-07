@@ -25,12 +25,16 @@ export const courseRouter = createTRPCRouter({
 						select: {
 							id: true,
 							name: true,
+							pos: true,
+							courseId: true,
 							lessons: {
 								where: { deleted: false },
 								orderBy: { pos: 'asc', },
 								select: {
 									id: true,
 									name: true,
+									pos: true,
+									status: true,
 								},
 							},
 						},

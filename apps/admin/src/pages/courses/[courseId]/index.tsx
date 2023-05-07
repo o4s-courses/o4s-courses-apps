@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useRef } from "react";
 import { useRouter } from "next/router";
 import { api, type RouterOutputs } from "~/utils/api";
@@ -47,7 +46,7 @@ const ManageCourse = () => {
 				published={courseQuery.data.published}
 				onCourseDelete={() => deleteCourseMutation.mutate(courseQuery.data.id)} />
 			<SectionWrapper className="mt-0">
-				<ModulesList courseId={courseQuery.data.id} />
+				<ModulesList courseId={courseQuery.data.id} modules={courseQuery.data.modules} />
 			
 			</SectionWrapper>
 			</>
