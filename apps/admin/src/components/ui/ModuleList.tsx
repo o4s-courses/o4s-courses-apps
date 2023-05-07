@@ -4,10 +4,8 @@ import { Toast } from "primereact/toast";
 import { api, type RouterOutputs } from "~/utils/api";
 import Loading from "./Loading";
 import LessonsTable from "./LessonsTable";
-
-type Props = {
-	courseId: number;
-};
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 
 type Modules = RouterOutputs["module"]["byCourse"];
 
@@ -32,28 +30,28 @@ const CreateModuleForm: React.FC<{ courseId: number; }> = ({ courseId }) => {
   return (
 		<><Toast ref={toast} />
     <div className="flex items-center border-b border-teal-500 pb-2">
-      <input
-        className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none p-2 dark:text-gray-400 text-gray-700"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-      />
+			<InputText
+				type="text"
+				placeholder="Module name"
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+				className="w-full" />
       {error?.data?.zodError?.fieldErrors.name && (
         <span className="mb-2 text-red-500">
           {error.data.zodError.fieldErrors.name}
         </span>
       )}
-      <button
-        className="block w-2/5 text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
-        onClick={() => {
+			<Button
+				onClick={() => {
           mutate({
 						courseId,
             name,
           });
         }}
-      >
-        Add new module
-      </button>
+				label="Module"
+        icon="pi pi-plus"
+        className="p-button-success"
+			/>
     </div>
 		</>
   );
@@ -83,29 +81,29 @@ const CreateLessonForm: React.FC<{
   return (
 		<><Toast ref={toast} />
     <div className="flex items-center border-b border-teal-500 pb-2">
-      <input
-        className="appearance-none bg-transparent border-none w-full mr-3 py-1 px-2 leading-tight focus:outline-none p-2 dark:text-gray-400 text-gray-700"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-      />
+			<InputText
+				type="text"
+				placeholder="Lesson name"
+				value={name}
+				onChange={(e) => setName(e.target.value)}
+				className="w-full" />
       {error?.data?.zodError?.fieldErrors.name && (
         <span className="mb-2 text-red-500">
           {error.data.zodError.fieldErrors.name}
         </span>
       )}
-      <button
-        className="block w-2/5 text-white bg-blue-600 dark:bg-sky-500 hover:bg-blue-500 dark:hover:bg-sky-600 ring-offset-2 ring-blue-600 dark:ring-sky-500 focus:ring shadow px-4 py-2.5 font-bold text-sm text-center duration-150 rounded-lg"
-        onClick={() => {
+			<Button
+				onClick={() => {
           mutate({
 						courseId,
 						moduleId,
             name,
           });
         }}
-      >
-        Add new lesson
-      </button>
+				label="Lesson"
+        icon="pi pi-plus"
+        className="p-button-success"
+			/>
     </div>
 		</>
   );
