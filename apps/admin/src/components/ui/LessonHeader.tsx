@@ -8,13 +8,12 @@ import { type RouterOutputs } from '~/utils/api';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
-}
-
-type Lesson = RouterOutputs["lesson"]["getContent"];
+};
 
 const LessonHeader: React.FC<{
-  lesson: Lesson;
-}> = ({ lesson }) => {
+  lesson: RouterOutputs["lesson"]["getContent"];
+	saveLessonHTML: () => void;
+}> = ({ lesson, saveLessonHTML }) => {
 	const router = useRouter();
 	const toast = useRef<Toast>(null);
 
@@ -28,7 +27,7 @@ const LessonHeader: React.FC<{
         message: 'Are you sure you want to proceed?',
         header: 'Confirmation',
         icon: 'pi pi-exclamation-triangle',
-        accept: () => onCourseDelete(),
+        accept: () => onLessonDelete(),
         reject,
     });
 	};
@@ -73,7 +72,12 @@ const LessonHeader: React.FC<{
 					</div>
 				</div>
 				<div className="mt-3 lg:mt-0">
-					<Button label="Add" className="p-button-outlined mr-2" icon="pi pi-user-plus" />
+					<Button
+						onClick={saveLessonHTML}
+						label="Save"
+						severity="success"
+						className="p-button-outlined mr-2"
+						icon="pi pi-save" />
 					<Button
 						onClick={confirm}
 						label="Delete"

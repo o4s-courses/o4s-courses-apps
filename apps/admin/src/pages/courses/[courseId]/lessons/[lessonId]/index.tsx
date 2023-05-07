@@ -3,8 +3,6 @@ import { api } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
-import SectionWrapper from "~/components/SectionWrapper";
-import LessonHeader from "~/components/ui/LessonHeader";
 import Loading from "~/components/ui/Loading";
 import LessonEditor from "~/components/ui/LessonEditor";
 
@@ -27,14 +25,9 @@ const EditLesson = () => {
 		{lessonQuery.data ? (
 			<><Header title={lessonQuery.data.name} />
 			<Nav />
-			<LessonHeader lesson={lessonQuery.data} />
-			<SectionWrapper className="mt-0">
-				<LessonEditor
-				  id={id}
-					html={lessonQuery.data.html}
-				/>
-			
-			</SectionWrapper>
+			<LessonEditor
+				lesson={lessonQuery.data}
+			/>
 			</>
 		) : (
       <Loading />

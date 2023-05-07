@@ -2,15 +2,19 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { api } from '~/utils/api';
+import { type RouterOutputs, api } from '~/utils/api';
 import { Toast } from 'primereact/toast';
 
+import SectionWrapper from "~/components/SectionWrapper";
+import LessonHeader from "~/components/ui/LessonHeader";
+
 const LessonEditor: React.FC<{
-	id: number;
-	html: string | undefined;
-}> = ({ id, html }) => {
+	lesson: RouterOutputs["lesson"]["getContent"];
+}> = ({ lesson }) => {
   const editorRef = useRef(null);
 	const toast = useRef<Toast>(null);
+	const id = lesson?.id;
+	const initialHTML = lesson?.html;
 
 	const { mutate, error } = api.lesson.saveHTML.useMutation({
     onSuccess() {
@@ -31,10 +35,12 @@ const LessonEditor: React.FC<{
 
   return (
     <><Toast ref={toast} />
+		<LessonHeader lesson={lesson} saveLessonHTML={() => save()} />
+		<SectionWrapper className="mt-0">
       <Editor
         tinymceScriptSrc='/tinymce/tinymce.min.js'
         onInit={(evt, editor) => editorRef.current = editor}
-        initialValue={html}
+        initialValue={initialHTML}
         init={{
           height: 500,
           menubar: true,
@@ -53,9 +59,7 @@ const LessonEditor: React.FC<{
           content_style: 'body { font-size:14px }'
         }}
       />
-			<div className="mt-5 flex lg:ml-4 lg:mt-0">
-      	<button onClick={save} className='inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>Save editor content</button>
-			</div>
+		</SectionWrapper>
     </>
   );
 };
