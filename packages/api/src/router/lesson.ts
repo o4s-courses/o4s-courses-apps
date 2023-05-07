@@ -25,6 +25,12 @@ export const lessonRouter = createTRPCRouter({
 					name: true,
 					html: true,
 					status: true,
+					course: {
+						select: {
+							id: true,
+							name: true,
+						},
+					},
 				},
 			});
   }),

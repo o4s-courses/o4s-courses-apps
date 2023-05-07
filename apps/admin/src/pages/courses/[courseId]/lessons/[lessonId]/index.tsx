@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { type NextPage } from "next/types";
-import { api, type RouterOutputs } from "~/utils/api";
+import { api } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
@@ -9,7 +8,7 @@ import LessonHeader from "~/components/ui/LessonHeader";
 import Loading from "~/components/ui/Loading";
 import LessonEditor from "~/components/ui/LessonEditor";
 
-const EditLesson: NextPage = () => {
+const EditLesson = () => {
 	const router = useRouter();
   const query = router.query;
 
@@ -28,7 +27,7 @@ const EditLesson: NextPage = () => {
 		{lessonQuery.data ? (
 			<><Header title={lessonQuery.data.name} />
 			<Nav />
-			<LessonHeader id={lessonQuery.data.id} name={lessonQuery.data.name} status={lessonQuery.data.status} />
+			<LessonHeader lesson={lessonQuery.data} />
 			<SectionWrapper className="mt-0">
 				<LessonEditor
 				  id={id}

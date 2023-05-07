@@ -3,21 +3,22 @@
 import React, { useRef } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { api } from '~/utils/api';
-import toast from 'react-hot-toast';
+import { Toast } from 'primereact/toast';
 
 const LessonEditor: React.FC<{
 	id: number;
 	html: string | undefined;
 }> = ({ id, html }) => {
   const editorRef = useRef(null);
+	const toast = useRef<Toast>(null);
 
 	const { mutate, error } = api.lesson.saveHTML.useMutation({
     onSuccess() {
-			toast.success("Lesson updated successfully");
+			toast.current?.show({severity:'success', summary: 'Success', detail:'Lesson updated successfully', life: 3000});
     },
 		onError(error) {
 			console.error(error);
-      toast.error("Something went wrong");
+			toast.current?.show({severity:'error', summary: 'Error', detail:'Something went wrong', life: 3000});
 		},
   });
 
@@ -29,7 +30,7 @@ const LessonEditor: React.FC<{
   };
 
   return (
-    <>
+    <><Toast ref={toast} />
       <Editor
         tinymceScriptSrc='/tinymce/tinymce.min.js'
         onInit={(evt, editor) => editorRef.current = editor}
