@@ -6,9 +6,8 @@ import CreateModuleForm from "../forms/CreateModuleForm";
 type Modules = RouterOutputs["module"]["byCourse"];
 
 const ModulesList: React.FC<{
-	courseId: number;
   modules: Modules;
-}> = ({ courseId, modules }) => {
+}> = ({ modules }) => {
 
 	const deleteModuleMutation = api.module.delete.useMutation({
     onSettled: () => moduleQuery.refetch(),
@@ -16,9 +15,6 @@ const ModulesList: React.FC<{
 
   return (
 		<>
-		<div className="p-3">
-			<CreateModuleForm courseId={courseId} />
-		</div>
 		{modules ? (
 			
       <div className="w-full">

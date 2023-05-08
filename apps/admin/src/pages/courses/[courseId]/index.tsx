@@ -46,7 +46,7 @@ const ManageCourse = () => {
 				published={courseQuery.data.published}
 				onCourseDelete={() => deleteCourseMutation.mutate(courseQuery.data.id)} />
 			<SectionWrapper className="mt-0">
-				<ModulesList courseId={courseQuery.data.id} modules={courseQuery.data.modules} />
+				<ModulesList modules={courseQuery.data.modules} />
 			</SectionWrapper>
 			</>
 		) : (

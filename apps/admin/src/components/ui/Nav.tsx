@@ -2,13 +2,18 @@ import React from 'react';
 import { useRouter } from "next/router";
 import { Menubar } from 'primereact/menubar';
 // import { InputText } from 'primereact/inputtext';
-import { signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 import Brand from "./Brand";
 import UserAvatar from './Avatar';
 
 export default function Nav() {
+	const { data: session } = useSession();
 	const router = useRouter();
+	if (!session) {
+		void router.push("/api/auth/signin");
+	};
+	
     const items = [
         {
 						label: 'Home',
@@ -16,7 +21,7 @@ export default function Nav() {
 						command: () => { void router.push('/'); },
 				},
 				{
-            label: 'Course',
+            label: 'Courses',
             icon: 'pi pi-fw pi-file',
             items: [
                 {
@@ -136,7 +141,7 @@ export default function Nav() {
 
   const start = <Brand className="mr-2"></Brand>;
   // const end = <InputText placeholder="Search" type="text" className="w-full" />;
-	const end = <UserAvatar />;
+	const end = <UserAvatar image={session?.user.image} />;
 
   return (
 		<header>

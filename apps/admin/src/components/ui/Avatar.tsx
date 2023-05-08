@@ -1,25 +1,25 @@
-import React from 'react'; 
+import React from 'react';
+//import md5 from "md5";
 import { Avatar } from 'primereact/avatar';
 
-type Props = {
-	name: string;
-  size: number;
-};
+const UserAvatar: React.FC<{
+	image: string | null;
+}> = ({ image }) => {
 
-const UserAvatar = () => {
-
-	const getUserAvatarURL = (email: string, size?: number) => {
+	/**
+	const getUserAvatarURL = (email: string) => {
 
 		if (!email) return '';
 	
-		// const emailHash = md5(email);
+		const emailHash = md5(email);
 	
-		return `https://www.gravatar.com/avatar/${emailHash}${size?`?size=${size}`:''}`;
+		return `https://www.gravatar.com/avatar/${emailHash}${size?`?size=80`:''}`;
 	};
+	 */
 
 	return (
 		<Avatar 
-			image="https://s.gravatar.com/avatar/ab28eca8fc8f2ad31a25612e284483af?s=80"
+			image={image}
 			className="flex align-items-center justify-content-center mr-2" size="large" shape="circle"
 		/>
 	);
