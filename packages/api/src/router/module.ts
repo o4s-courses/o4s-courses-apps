@@ -71,6 +71,23 @@ export const moduleRouter = createTRPCRouter({
 						}}
 				);
     }),
+	update: adminProcedure
+    .input(
+      z.object({
+				id: z.number(),
+        name: z.string().min(1),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.module.update({
+						where: { id: input.id },
+						data: {
+							name: input.name,
+							slug: slugify(input.name),
+						}
+					}
+				);
+    }),
   create: adminProcedure
     .input(
       z.object({

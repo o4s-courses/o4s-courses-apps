@@ -41,6 +41,17 @@ const LessonsTable: React.FC<{
     });
 	};
 
+	const updateModule = api.module.update.useMutation({
+    async onSuccess() {
+			toast.current?.show({severity:'success', summary: 'Success', detail:'Module updated successfully', life: 3000});
+      await utils.course.byId.invalidate();
+    },
+		onError(error) {
+			console.error(error);
+      toast.current?.show({severity:'error', summary: 'Error', detail: 'Something went wrong', life: 6000});
+		},
+  });
+
 	const updateLesson = api.lesson.update.useMutation({
     async onSuccess() {
 			toast.current?.show({severity:'success', summary: 'Success', detail:'Lesson updated successfully', life: 3000});
@@ -68,46 +79,55 @@ const LessonsTable: React.FC<{
 		if (newWindow) newWindow.opener = null
 	}
 
-    const getSeverity = (value: string) => {
-        switch (value) {
-            case 'published':
-                return 'success';
+  const getSeverity = (value: string) => {
+    switch (value) {
+      case 'published':
+        return 'success';
 
-            case 'draft':
-                return 'danger';
+      case 'draft':
+        return 'danger';
 
-            default:
-                return null;
-        }
-    };
+      default:
+        return null;
+    }
+  };
 
-    const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
-        const { newData, index } = e;
+  const onLessonRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
+    const { newData, index } = e;
 
-				updateLesson.mutate({
-					id: newData.id,
-					name: newData.name,
-					status: newData.status,
-				});
-    };
+		updateLesson.mutate({
+			id: newData.id,
+			name: newData.name,
+			status: newData.status,
+		});
+  };
 
-    const textEditor = (options) => {
-        return <InputText type="text" value={options.value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => options.editorCallback(e.target.value)} />;
-    };
+	const onModuleRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
+		const { newData, index } = e;
 
-    const statusEditor = (options) => {
-        return (
-            <Dropdown
-                value={options.value}
-                options={statuses}
-                onChange={(e: DropdownChangeEvent) => options.editorCallback(e.value)}
-                placeholder="Select a Status"
-                itemTemplate={(option) => {
-                    return <Tag value={option} severity={getSeverity(option)}></Tag>;
-                }}
-            />
-        );
-    };
+		updateModule.mutate({
+			id: newData.id,
+			name: newData.name,
+		});
+	};
+
+  const textEditor = (options) => {
+    return <InputText className="w-full" type="text" value={options.value} onChange={(e: React.ChangeEvent<HTMLInputElement>) => options.editorCallback(e.target.value)} />;
+  };
+
+  const statusEditor = (options) => {
+    return (
+      <Dropdown
+        value={options.value}
+        options={statuses}
+        onChange={(e: DropdownChangeEvent) => options.editorCallback(e.value)}
+        placeholder="Select a Status"
+        itemTemplate={(option) => {
+          return <Tag value={option} severity={getSeverity(option)}></Tag>;
+        }}
+      />
+    );
+  };
 
   const statusBodyTemplate = (rowData) => {
     return <Tag value={rowData.status} severity={getSeverity(rowData.status)}></Tag>;
@@ -170,7 +190,7 @@ const LessonsTable: React.FC<{
 							value={data.lessons}
 							editMode="row"
 							dataKey="id"
-							onRowEditComplete={onRowEditComplete}
+							onRowEditComplete={onLessonRowEditComplete}
 							footer={footer}
 							tableStyle={{ minWidth: '50rem' }}
 						>
@@ -188,9 +208,11 @@ const LessonsTable: React.FC<{
 
   return (
 		<><Toast ref={toast} />
+		<ConfirmDialog />
 		<div className="card">
-			<ConfirmDialog />
 			<DataTable value={modules}
+									editMode="row"
+									onRowEditComplete={onModuleRowEditComplete}
 									expandedRows={expandedRows}
 									onRowToggle={(e) => setExpandedRows(e.data)}
 									rowExpansionTemplate={rowExpansionTemplate}
@@ -198,7 +220,9 @@ const LessonsTable: React.FC<{
         <Column expander={allowExpansion} style={{ width: '5rem' }} />
 				<Column field="id" header="#" style={{ width: '10%' }} />
 				<Column field="pos" header="Pos" style={{ width: '10%' }} />
-        <Column field="name" header="Module" style={{ width: '90%' }} />
+        <Column field="name" header="Module" editor={(options) => textEditor(options)} style={{ width: '65%' }} />
+				<Column rowEditor headerStyle={{ width: '10%', minWidth: '6rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+				<Column style={{ width: '5%', minWidth: '3rem' }} body={deleteBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
       </DataTable>
 		</div>
 		</>

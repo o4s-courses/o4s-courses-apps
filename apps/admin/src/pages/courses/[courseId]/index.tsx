@@ -9,7 +9,6 @@ import CourseHeader from "~/components/ui/CourseHeader";
 import Loading from "~/components/ui/Loading";
 import ModulesList from "~/components/ui/ModuleList";
 import { Toast } from "primereact/toast";
-import LessonsTable from "~/components/ui/LessonsTable";
 
 const ManageCourse = () => {
 	const router = useRouter();
