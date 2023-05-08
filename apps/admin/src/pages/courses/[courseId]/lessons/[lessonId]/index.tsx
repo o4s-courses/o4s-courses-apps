@@ -3,8 +3,8 @@ import { api } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
-import Loading from "~/components/ui/Loading";
 import LessonEditor from "~/components/ui/LessonEditor";
+import LoadingEditor from "~/components/ui/LoadingEditor";
 
 const EditLesson = () => {
 	const router = useRouter();
@@ -30,7 +30,7 @@ const EditLesson = () => {
 			/>
 			</>
 		) : (
-      <Loading />
+      <LoadingEditor />
     )}
 		</>
 	);

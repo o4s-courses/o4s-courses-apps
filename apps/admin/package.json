@@ -34,7 +34,8 @@
 		"tinymce": "^6.4.2",
 		"@tinymce/tinymce-react": "^4.3.0",
     "superjson": "1.12.3",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+		"md5": "^2.3.0"
   },
   "devDependencies": {
     "@o4s/eslint-config": "^0.1.0",

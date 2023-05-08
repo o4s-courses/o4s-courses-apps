@@ -17,7 +17,7 @@ const CourseHeader = ({ id, name, published, onCourseDelete }: Props) => {
 
 	const reject = () => {
 		toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 6000 });
-	}
+	};
 
 	const confirm = (event) => {
     confirmDialog({

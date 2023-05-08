@@ -9,6 +9,7 @@ import CourseHeader from "~/components/ui/CourseHeader";
 import Loading from "~/components/ui/Loading";
 import ModulesList from "~/components/ui/ModuleList";
 import { Toast } from "primereact/toast";
+import LessonsTable from "~/components/ui/LessonsTable";
 
 const ManageCourse = () => {
 	const router = useRouter();
@@ -47,7 +48,6 @@ const ManageCourse = () => {
 				onCourseDelete={() => deleteCourseMutation.mutate(courseQuery.data.id)} />
 			<SectionWrapper className="mt-0">
 				<ModulesList courseId={courseQuery.data.id} modules={courseQuery.data.modules} />
-			
 			</SectionWrapper>
 			</>
 		) : (

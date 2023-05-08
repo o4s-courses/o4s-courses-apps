@@ -35,6 +35,7 @@ export const courseRouter = createTRPCRouter({
 									name: true,
 									pos: true,
 									status: true,
+									courseId: true,
 								},
 							},
 						},

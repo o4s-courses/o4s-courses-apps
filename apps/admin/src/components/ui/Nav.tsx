@@ -1,10 +1,11 @@
 import React from 'react';
 import { useRouter } from "next/router";
 import { Menubar } from 'primereact/menubar';
-import { InputText } from 'primereact/inputtext';
+// import { InputText } from 'primereact/inputtext';
 import { signOut } from "next-auth/react";
 
 import Brand from "./Brand";
+import UserAvatar from './Avatar';
 
 export default function Nav() {
 	const router = useRouter();
@@ -134,7 +135,8 @@ export default function Nav() {
     ];
 
   const start = <Brand className="mr-2"></Brand>;
-  const end = <InputText placeholder="Search" type="text" className="w-full" />;
+  // const end = <InputText placeholder="Search" type="text" className="w-full" />;
+	const end = <UserAvatar />;
 
   return (
 		<header>

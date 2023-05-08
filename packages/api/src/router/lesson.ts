@@ -34,6 +34,30 @@ export const lessonRouter = createTRPCRouter({
 				},
 			});
   }),
+	withModule: adminProcedure
+		.input(z.object({ id: z.number() }))
+		.query(({ ctx, input }) => {
+			return ctx.prisma.lesson.findMany({
+				where: {
+					courseId: input.id,
+					deleted: false,
+				},
+				select: {
+					id: true,
+					name: true,
+					pos: true,
+					status: true,
+					courseId: true,
+					module: {
+						select: {
+							id: true,
+							name: true,
+							pos: true,
+						},
+					},
+				},
+			});
+	}),
 	byAuthor: adminProcedure
 		.query(({ ctx }) => {
 			return ctx.prisma.course.findMany({
@@ -55,6 +79,25 @@ export const lessonRouter = createTRPCRouter({
 				}
 			});
 		}),
+	update: adminProcedure
+    .input(
+      z.object({
+				id: z.number(),
+        name: z.string().min(1),
+				status: z.enum(["published", "draft"]),
+      }),
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.lesson.update({
+						where: { id: input.id },
+						data: {
+							name: input.name,
+							slug: slugify(input.name),
+							status: input.status,
+						}
+					}
+				);
+    }),
   create: adminProcedure
     .input(
       z.object({
@@ -91,8 +134,8 @@ export const lessonRouter = createTRPCRouter({
 		}),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.prisma.lesson.update({
-			where: {id: input },
-			data: { deleted: true },
+			where: { id: input, },
+			data: { deleted: true, },
 		});
   }),
 });

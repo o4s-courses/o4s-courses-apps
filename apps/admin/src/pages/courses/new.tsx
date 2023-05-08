@@ -35,7 +35,7 @@ const CreateCourseForm: React.FC = () => {
 		<div className="card justify-content-center">
 			<div className="field card flex">
 				<span className="p-float-label">
-					<InputText id="name" value={name} onChange={(e) => setName(e.target.value)} rows={5} />
+					<InputText id="name" value={name} onChange={(e) => setName(e.target.value)} />
 					<label htmlFor="name">Course name</label>
 				</span>
 			</div>
