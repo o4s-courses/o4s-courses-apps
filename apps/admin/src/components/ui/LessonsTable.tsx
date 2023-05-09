@@ -8,26 +8,22 @@ import { DataTable, type DataTableExpandedRows, type DataTableRowEditCompleteEve
 import { Column } from 'primereact/column';
 import { InputText } from 'primereact/inputtext';
 import { Dropdown, type DropdownChangeEvent } from 'primereact/dropdown';
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
 import { Toolbar } from 'primereact/toolbar';
 import { Tag } from 'primereact/tag';
 import { Toast } from "primereact/toast";
 import { type RouterOutputs, api } from '~/utils/api';
 import { Button } from 'primereact/button';
-import CreateLessonForm from '../forms/CreateLessonForm';
 import { Dialog } from 'primereact/dialog';
 
 type Module = RouterOutputs["module"]["byCourse"][number];
 type Modules = RouterOutputs["module"]["byCourse"];
 
 type ModuleDTO = {
-	id: 0;
 	courseId: number;
 	name: string;
 };
 
 type LessonDTO = {
-	id: 0;
 	courseId: number;
 	moduleId: number;
 	name: string;
@@ -41,13 +37,11 @@ const LessonsTable: React.FC<{
   modules: Modules;
 }> = ({ modules }) => {
 	let emptyModule: ModuleDTO = {
-		id: 0,
 		courseId: modules[0].courseId,
 		name: '',
 	};
 
 	let emptyLesson: LessonDTO = {
-		id: 0,
 		courseId: modules[0].courseId,
 		moduleId: 0,
     name: '',
@@ -57,6 +51,8 @@ const LessonsTable: React.FC<{
   const [expandedRows, setExpandedRows] = useState<DataTableExpandedRows>(null);
 	const [deleteModuleDialog, setDeleteModuleDialog] = useState<boolean>(false);
 	const [module, setModule] = useState<ModuleDTO>(emptyModule);
+	const [moduleToDelete, setModuleToDelete] = useState<number>(0);
+	const [moduleToInsert, setModuleToInsert] = useState<number>(0);
 	const [moduleDialog, setModuleDialog] = useState<boolean>(false);
 	const [submittedModule, setModuleSubmitted] = useState<boolean>(false);
 	const [lesson, setLesson] = useState<LessonDTO>(emptyLesson);
@@ -143,19 +139,14 @@ const LessonsTable: React.FC<{
 
 	/** Delete a module */
 
-	const confirmDeleteModule = (id: number, name: string) => {
-		let _module = { ...module };
-
-		_module[`${id}`] = id;
-		_module[`${name}`] = name;
-
-		setModule(_module);
+	const confirmDeleteModule = (id: number) => {
+		setModuleToDelete(id);
 		setDeleteModuleDialog(true);
 	};
 
 	const deleteModuleBodyTemplate = (rowData) => {
 		return <Button
-							onClick={() => confirmDeleteModule(rowData.id, rowData.name)}
+							onClick={() => confirmDeleteModule(rowData.id)}
 							icon="pi pi-trash" rounded text
 							severity="danger" 
 							className="hover:bg-gray-200" aria-label="Delete" />;
@@ -168,8 +159,8 @@ const LessonsTable: React.FC<{
 	const confirmedDeleteModule = () => {
 
 		setDeleteModuleDialog(false);
-		setModule(emptyModule);
-		deleteModule.mutate(module.id);
+		setModuleToDelete(0);
+		deleteModule.mutate(moduleToDelete);
 	};
 
 	const deleteModuleDialogFooter = (
@@ -207,10 +198,8 @@ const LessonsTable: React.FC<{
 	};
 
 	const openNewLesson = (moduleId: number) => {
+		setModuleToInsert(moduleId);
 		setLesson(emptyLesson);
-		let _lesson = { ...lesson };
-		_lesson[`${moduleId}`] = moduleId;
-		setLesson(_lesson);
 		setLessonSubmitted(false);
 		setLessonDialog(true);
 	};
@@ -234,7 +223,7 @@ const LessonsTable: React.FC<{
 				setLesson(emptyLesson);
 				createLesson.mutate({
 					courseId: _lesson.courseId,
-					moduleId: _lesson.moduleId,
+					moduleId: moduleToInsert,
 					name: _lesson.name,
 				});
 
@@ -247,18 +236,6 @@ const LessonsTable: React.FC<{
 				<Button label="Save" icon="pi pi-check" onClick={saveLesson} />
 		</React.Fragment>
 	);
-
-	const leftLessonToolbarTemplate = () => {
-		return (
-				<div className="flex flex-wrap gap-2">
-						<Button label="New" icon="pi pi-plus" severity="success" onClick={openNewLesson} />
-				</div>
-		);
-	};
-
-	const rightLessonToolbarTemplate = () => {
-			return <Button label="Export" icon="pi pi-upload" className="p-button-help" onClick={exportCSV} />;
-	};
 
 	const createLesson = api.lesson.create.useMutation({
     async onSuccess() {
@@ -275,21 +252,6 @@ const LessonsTable: React.FC<{
 
 	const exportCSV = () => {
 		dt.current.exportCSV();
-	};
-
-	const reject = () => {
-		toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 3000 });
-	};
-
-	const confirm = (event) => {
-    confirmDialog({
-        trigger: event.currentTarget,
-        message: `Are you sure you want to proceed? ${event}`,
-        header: 'Confirmation',
-        icon: 'pi pi-exclamation-triangle',
-        accept: () => deleteLesson.mutate(event),
-        reject,
-    });
 	};
 
 	const updateModule = api.module.update.useMutation({
@@ -406,6 +368,24 @@ const LessonsTable: React.FC<{
 		// return rowData.lessons.length > 0;
 	};
 
+	/**
+	const rowClass = (data: Product) => {
+		return {
+				'bg-primary': data.category === 'Fitness'
+		};
+	};
+	 */
+
+	const setLessonOrder = (data) => {
+		toast.current?.show({severity:'success', summary: 'Success', detail: JSON.stringify(data), life: 3000});
+		//setLessonOrder(data);
+  };
+
+	const setModuleOrder = (data) => {
+		toast.current?.show({severity:'success', summary: 'Success', detail: JSON.stringify(data), life: 3000});
+		//setLessonOrder(data);
+  };
+
 	const rowExpansionTemplate = (data: Module) => {
 		return (
 				<div className="p-1">
@@ -415,18 +395,19 @@ const LessonsTable: React.FC<{
 							editMode="row"
 							dataKey="id"
 							onRowEditComplete={onLessonRowEditComplete}
+							reorderableRows onRowReorder={(e) => setLessonOrder(e.value)}
 							tableStyle={{ minWidth: '50rem' }}
 						>
+						<Column rowReorder style={{ width: '3%', minWidth: '3rem' }} />
 						<Column field="id" header="#" style={{ width: '5%' }}></Column>
 						<Column field="pos" header="Pos" sortable style={{ width: '5%' }}></Column>
 						<Column field="name" header="Lesson" editor={(options) => textEditor(options)} style={{ width: '45%' }}></Column>
 						<Column field="status" header="Status" body={statusBodyTemplate} editor={(options) => statusEditor(options)} style={{ width: '10%' }}></Column>
 						<Column rowEditor headerStyle={{ width: '10%', minWidth: '6rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
-						<Column style={{ width: '5%', minWidth: '3rem' }} body={htmlBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
-						<Column style={{ width: '5%', minWidth: '3rem' }} body={addLessonBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
-						<Column style={{ width: '5%', minWidth: '3rem' }} body={deleteBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
+						<Column style={{ width: '3%', minWidth: '3rem' }} body={htmlBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
+						<Column style={{ width: '3%', minWidth: '3rem' }} body={addLessonBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
+						<Column style={{ width: '3%', minWidth: '3rem' }} body={deleteBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
 					</DataTable>
-					<Toolbar className="mb-4" left={leftLessonToolbarTemplate} right={rightLessonToolbarTemplate}></Toolbar>
 					<Dialog visible={lessonDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Create lesson" modal className="p-fluid" footer={lessonDialogFooter} onHide={hideLessonDialog}>
                 <div className="field">
                     <label htmlFor="name" className="font-bold">
@@ -447,24 +428,27 @@ const LessonsTable: React.FC<{
 			<Toolbar className="mb-4" left={leftModuleToolbarTemplate} right={rightModuleToolbarTemplate}></Toolbar>
 			<DataTable value={modules}
 									editMode="row"
+									dataKey="id"
 									onRowEditComplete={onModuleRowEditComplete}
 									expandedRows={expandedRows}
 									onRowToggle={(e) => setExpandedRows(e.data)}
 									rowExpansionTemplate={rowExpansionTemplate}
-                 	dataKey="id" tableStyle={{ minWidth: '60rem' }}>
+									reorderableRows onRowReorder={(e) => setModuleOrder(e.value)}
+                 	tableStyle={{ minWidth: '60rem' }}>
+				<Column rowReorder style={{ width: '3%', minWidth: '3rem' }} />
         <Column expander={allowExpansion} style={{ width: '5rem' }} />
 				<Column field="id" header="#" style={{ width: '10%' }} />
 				<Column field="pos" header="Pos" style={{ width: '10%' }} />
         <Column field="name" header="Module" editor={(options) => textEditor(options)} style={{ width: '65%' }} />
-				<Column rowEditor headerStyle={{ width: '10%', minWidth: '6rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
-				<Column style={{ width: '5%', minWidth: '3rem' }} body={deleteModuleBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
+				<Column rowEditor headerStyle={{ width: '9%', minWidth: '6rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
+				<Column style={{ width: '3%', minWidth: '3rem' }} body={deleteModuleBodyTemplate} bodyStyle={{ textAlign: 'center' }}/>
       </DataTable>
 			<Dialog visible={deleteModuleDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteModuleDialogFooter} onHide={hideDeleteModuleDialog}>
         <div className="confirmation-content">
           <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
             {module && (
               <span>
-                Are you sure you want to delete <b>{module.id} : {module.name}</b>?
+                <b>Are you sure you want to delete?</b>
               </span>
             )}
         </div>

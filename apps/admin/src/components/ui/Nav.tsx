@@ -44,8 +44,8 @@ export default function Nav() {
             ]
         },
         {
-            label: 'Edit',
-            icon: 'pi pi-fw pi-pencil',
+            label: 'Products',
+            icon: 'pi pi-fw pi-shopping-cart',
             items: [
                 {
                     label: 'Left',

@@ -97,18 +97,29 @@ export const moduleRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-			const id = input.courseId;
+			const lessonName = "Lesson for " + input.name;
       return ctx.prisma.module.create({
 						data: {
 							name: input.name,
 							slug: slugify(input.name),
 							course: {
 								connect: {
-									id
-								}
-							}
-						}}
-				);
+									id: input.courseId,
+								},
+							},
+							lessons: {
+                create: {
+                  name: lessonName,
+                  slug: slugify(lessonName),
+                  course: {
+    								connect: {
+    									id: input.courseId,
+    								},
+    							},
+                },
+              },
+						},
+					});
     }),
   delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
     return ctx.prisma.module.update({
