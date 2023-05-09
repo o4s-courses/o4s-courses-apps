@@ -1,6 +1,6 @@
 [
 	{
-			"thumbnail": "/thumbnails/intro.png",
+			"thumbnail": "/cursos/badgePERMAPT-01.png",
 			"price": "€35,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "Introdução à Permacultura",
@@ -9,7 +9,7 @@
 			"slug": "introducao-a-permacultura"
 	},
 	{
-			"thumbnail": "/thumbnails/datastructures.png",
+			"thumbnail": "/cursos/badgeBDPT-01.png",
 			"price": "€35,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1669411003/Binary_Search_Algorithm_in_100_Seconds_hyg6n5.mp4",
 			"title": "Introdução à Agricultura Biodinâmica",
@@ -18,16 +18,16 @@
 			"slug": "introducao-a-agricultura-biodinamica"
 	},
 	{
-			"thumbnail": "/thumbnails/databases.png",
+			"thumbnail": "/cursos/badgeVSPT-01.png",
 			"price": "GRATUITO",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
-			"title": "Sql and NoSql Databases",
+			"title": "Introdução à Sustentabilidade Integral",
 			"description": "In this video we will learn the difference between SQL, and NoSQL, and how to deal with both of them.",
 			"include": "NÃO INCLUI facilitação nem certificação",
-			"slug": "sql-and-nosql-databases"
+			"slug": "introducao-a-sustentabilidade-integral"
 	},
 	{
-			"thumbnail": "/thumbnails/computerarchitecture.png",
+			"thumbnail": "/cursos/badgePERMAPT-01.png",
 			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "Introdução à Permacultura",
@@ -36,7 +36,7 @@
 			"slug": "introducao-a-permacultura-facilitacao-certificacao"
 	},
 	{
-			"thumbnail": "/thumbnails/discretemath.png",
+			"thumbnail": "/cursos/badgeBDPT-01.png",
 			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
 			"title": "Introdução à Agricultura Biodinâmica",
@@ -45,12 +45,12 @@
 			"slug": "introducao-a-agricultura-biodinamica-facilitacao-certificacao"
 	},
 	{
-			"thumbnail": "/thumbnails/javaScript.png",
+			"thumbnail": "/cursos/badgeVSPT-01.png",
 			"price": "€75,00",
 			"lesson": "https://res.cloudinary.com/floatui/video/upload/v1673211729/cs50_h7vvpl.3gp",
-			"title": "JavaScript programming language",
+			"title": "Introdução à Sustentabilidade Integral",
 			"description": "We wil cover the basic of JavaScript, and how it’s works, and you will learn OOP.",
 			"include": "INCLUI facilitação e certificação",
-			"slug": "javascript-programming-language"
+			"slug": "introducao-a-sustentabilidade-integral-facilitacao-certificacao"
 	}
 ]
