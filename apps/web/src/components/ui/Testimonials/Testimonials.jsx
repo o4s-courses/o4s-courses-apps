@@ -31,11 +31,11 @@ const Testimonials = () => {
       className="bg-gray-50 dark:my-0 dark:bg-gray-900 sm:my-16"
     >
       <div className="custom-screen text-gray-600 dark:text-gray-300">
-        <div className="mt-12 space-y-3">
+        <div className="max-w-xl space-y-3">
           <h3 className="text-3xl font-semibold text-gray-800 dark:text-gray-50 sm:text-4xl">
-            <strong>See what others saying about us</strong>
+            <strong>O que dizem os nossos estudantes</strong>
           </h3>
-          <p className="mt-3">
+          <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et est
             hendrerit, porta nunc vitae, gravida justo. Nunc fermentum magna
             lorem, euismod volutpat arcu volutpat et.

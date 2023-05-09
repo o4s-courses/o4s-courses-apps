@@ -72,6 +72,7 @@ const Navbar = () => {
             <Link href="/" aria-label="Logo">
               <Brand className={`dark:text-white ${brandColor}`} />
             </Link>
+						Projeto Ser Sustentável
             <div className="flex items-center gap-x-3 md:hidden">
               <DarkModeBtn />
               <button

@@ -70,7 +70,7 @@ const Features = () => {
       className="bg-gray-50 dark:my-0 dark:bg-gray-900 sm:my-16"
     >
       <div className="custom-screen text-gray-600 dark:text-gray-300">
-        <div className="mt-12 space-y-3">
+        <div className="max-w-xl space-y-3">
           <h2 className="text-3xl font-semibold text-gray-800 dark:text-gray-50 sm:text-4xl">
             <strong>MOOC O4S</strong>
           </h2>

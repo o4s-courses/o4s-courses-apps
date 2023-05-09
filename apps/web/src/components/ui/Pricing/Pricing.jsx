@@ -7,9 +7,9 @@ const Pricing = () => {
             <div className="custom-screen gap-12 justify-between md:flex">
                 <div className='relative max-w-2xl text-gray-300'>
                     <h2 className='text-gray-50 text-3xl font-semibold sm:text-4xl'>
-                        Junta-te a nós na jornada
+                        Inicia a tua jornada
                     </h2>
-                    <p className='mt-3 max-w-xl'>
+                    <p>
 											O desafio é criar uma sociedade sustentável, justa e pacífica, em harmonia com toda a terra e vida. Implica uma sensibilidade ecológica e um profundo respeito, tanto pelas culturas indígenas como pelas modernas, e também para com a diversidade das formas vidas na Terra.
                     </p>
                 </div>
