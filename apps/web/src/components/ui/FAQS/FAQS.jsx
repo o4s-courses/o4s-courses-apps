@@ -109,15 +109,6 @@ const FAQS = () => {
   return (
     <SectionWrapper id="faqs">
       <div className="custom-screen">
-        <div className="space-y-3 text-center">
-          <h1 className="text-3xl font-semibold text-gray-800 dark:text-gray-50">
-            Ajuda / Perguntas Frequentes
-          </h1>
-          <p className="mx-auto max-w-lg text-lg text-gray-600 dark:text-gray-300">
-            Se precisa de ajuda, por favor, leia a lista de perguntas mais
-            frequentes. Contate-nos se ainda tiver dúvidas.
-          </p>
-        </div>
         <div className="mx-auto mt-14 max-w-2xl">
           {faqsList.map((item, idx) => (
             <FaqsCard idx={idx} faqsList={item} />
