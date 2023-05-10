@@ -145,6 +145,7 @@ model Product {
   id          Int      @id @default(autoincrement())
   name        String
   description String
+	image 			String?	 @db.VarChar(2000)
   price       Int      @default(3500)
   currency    String   @default("EUR")
   courses     Course[]
