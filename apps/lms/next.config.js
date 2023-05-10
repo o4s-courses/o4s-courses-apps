@@ -7,6 +7,12 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: !!process.env.CI },
   typescript: { ignoreBuildErrors: !!process.env.CI },
 
+	i18n: {
+    locales: ['en', 'pt'],
+    defaultLocale: 'en',
+		localeDetection: false,
+  },
+
 	async headers() {
     return [
       {

@@ -17,6 +17,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
+import { useChangeLocale, useCurrentLocale } from '~/locales'
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link

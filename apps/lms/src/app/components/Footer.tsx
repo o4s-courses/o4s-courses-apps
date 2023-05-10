@@ -14,6 +14,8 @@ import {
 import { ReactNode } from 'react';
 import { FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
+import { getDictionary } from '~/utils/get-dictionary'
+import { Locale } from '~/i18n-config'
 
 const Logo = (props: any) => {
   return (

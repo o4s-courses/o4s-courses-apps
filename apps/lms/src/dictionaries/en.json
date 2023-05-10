@@ -1,0 +1,13 @@
+{
+  "server-component": {
+    "hello": "Welcome to Chakra UI + Next.js",
+		"welcome": "Hello"
+  },
+  "counter": {
+    "increment": "Increment",
+    "decrement": "Decrement"
+  },
+	"footer": {
+		"rights": "All rights reserved"
+	}
+}

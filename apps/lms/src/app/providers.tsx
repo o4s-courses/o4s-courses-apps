@@ -13,7 +13,7 @@ import { api } from "~/utils/api";
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode,
 }) {
   return (
     <CacheProvider>
@@ -24,7 +24,7 @@ export default function RootLayout({
   )
 }
 
-export const TrpcProvider: React.FC<{ children: React.ReactNode }> = ({
+export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
   children,
 }) => {
 	const url = process.env.NEXT_PUBLIC_VERCEL_URL
