@@ -15,9 +15,9 @@ function RootLayout({
         <ColorModeScript type="cookie" nonce="testing" />
         <Provider>
 					<TrpcProvider>
-						<div>
+						
 							{children}
-						</div>
+						
 					</TrpcProvider>
 				</Provider>
       </body>

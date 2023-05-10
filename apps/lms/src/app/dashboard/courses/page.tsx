@@ -4,11 +4,16 @@ import { api, type RouterOutputs } from "~/utils/api";
 
 import { Link } from "@chakra-ui/next-js"
 import { Box, Button, Text, useColorMode } from "@chakra-ui/react"
+import Loading from "~/components/Loading";
 
 type course = RouterOutputs["course"]["all"][number]
 
 export default function DashboardCourses() {
-	const userQuery = api.course.all.useQuery()
+	const {data: courses, isLoading } = api.course.all.useQuery()
+
+	if (isLoading) {
+    return <Loading />
+  }
   
   return (
 		<>
@@ -17,15 +22,13 @@ export default function DashboardCourses() {
 
     </Box>
 
-			<Box textAlign="center" fontSize="xl">
-				{userQuery.data?.map((courses) => (
-					<>
-					<p>{courses.id}</p>
-					<p>{courses.name}</p>
-					</>
+      <Box textAlign="center" fontSize="xl">
+				{courses?.map((course) => (
+					<><p>{course.id}</p>
+					<p>{course.name}</p></>
 				))}
       </Box>
-
 		</>
+		
   )
 }
