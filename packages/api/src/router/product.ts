@@ -3,18 +3,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
 
-export const postRouter = createTRPCRouter({
+export const productRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.post.findMany({ orderBy: { id: "desc" } });
+    return ctx.prisma.product.findMany({ orderBy: { id: "desc" } });
   }),
   byId: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(({ ctx, input }) => {
-      return ctx.prisma.post.findFirst({ where: { id: input.id } });
+      return ctx.prisma.product.findFirst({ where: { id: input.id } });
     }),
-  create: publicProcedure
+  create: adminProcedure
     .input(
       z.object({
         name: z.string().min(1),
@@ -22,9 +22,9 @@ export const postRouter = createTRPCRouter({
       }),
     )
     .mutation(({ ctx, input }) => {
-      return ctx.prisma.post.create({ data: input });
+      return ctx.prisma.product.create({ data: input });
     }),
-  delete: publicProcedure.input(z.number()).mutation(({ ctx, input }) => {
-    return ctx.prisma.post.delete({ where: { id: input } });
+  delete: adminProcedure.input(z.number()).mutation(({ ctx, input }) => {
+    return ctx.prisma.product.delete({ where: { id: input } });
   }),
 });

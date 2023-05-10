@@ -55,12 +55,6 @@ export const authOptions: NextAuthOptions = {
 
       return session
     }
-  },
-  theme: {
-    colorScheme: "dark", // "auto" | "dark" | "light"
-    brandColor: "#1FB2A5", // Hex color code
-    logo: "https://cld.pt/dl/download/d2e82d71-a6b7-4ab2-8c21-8f2d4be99505/logoO4S-70alt.png", // Absolute URL to image
-    // buttonText: "" // Hex color code
   }
 };
 

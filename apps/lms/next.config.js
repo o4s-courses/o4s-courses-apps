@@ -1,11 +1,5 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
- * This is especially useful for Docker builds and Linting.
- */
-// !process.env.SKIP_ENV_VALIDATION && (await import("./src/env.mjs"));
-
-/** @type {import("next").NextConfig} */
-const config = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@o4s/api", "@o4s/auth", "@o4s/db"],
@@ -29,4 +23,5 @@ const config = {
   },
 };
 
-export default config;
+module.exports = nextConfig
+

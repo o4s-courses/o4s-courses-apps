@@ -14,14 +14,14 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "^4.14.0",
     "@planetscale/database": "^1.7.0",
 		"prisma-redis-middleware": "^4.7.0",
 		"ioredis": "^5.3.2"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
-    "prisma": "^4.13.0",
+    "prisma": "^4.14.0",
     "typescript": "^5.0.4"
   }
 }
