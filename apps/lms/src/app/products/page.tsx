@@ -1,3 +1,5 @@
+"use client"
+
 import Loading from "~/components/Loading";
 import ProductCard from "~/components/ProductCard";
 import { RouterOutputs, api } from "~/utils/api";

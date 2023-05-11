@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure, adminProcedure } from "../trpc";
+import { adminProcedure, createTRPCRouter, publicProcedure } from "../trpc";
 
 export const productRouter = createTRPCRouter({
   all: publicProcedure.query(({ ctx }) => {
