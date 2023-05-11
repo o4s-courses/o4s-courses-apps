@@ -3,6 +3,8 @@
 import { CacheProvider } from "@chakra-ui/next-js"
 import { ChakraProvider, cookieStorageManager } from "@chakra-ui/react"
 
+import { SessionProvider } from "next-auth/react"
+
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import React, { useState } from 'react';
@@ -11,28 +13,28 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { api } from "~/utils/api";
 
 export default function RootLayout({
-  children,
+	children,
 }: {
-  children: React.ReactNode,
+	children: React.ReactNode,
 }) {
-  return (
-    <CacheProvider>
-      <ChakraProvider colorModeManager={cookieStorageManager}>
-        {children}
-      </ChakraProvider>
-    </CacheProvider>
-  )
+	return (
+		<CacheProvider>
+			<ChakraProvider colorModeManager={cookieStorageManager}>
+				{children}
+			</ChakraProvider>
+		</CacheProvider>
+	)
 }
 
 export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
-  children,
+	children,
 }) => {
 	const url = process.env.NEXT_PUBLIC_VERCEL_URL
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : "http://joseantcordeiro.hopto.org:4000/api/trpc";
-  const [queryClient] = useState(() => new QueryClient());
-  const [trpcClient] = useState(() =>
-    api.createClient({
+		? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+		: "http://joseantcordeiro.hopto.org:4000/api/trpc";
+	const [queryClient] = useState(() => new QueryClient());
+	const [trpcClient] = useState(() =>
+		api.createClient({
 			links: [
 				httpBatchLink({
 					url: url,
@@ -46,12 +48,18 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
 			],
 			transformer: superjson,
 		}),
-  );
-  return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
+	);
+	return (
+		<api.Provider client={trpcClient} queryClient={queryClient}>
+			<QueryClientProvider client={queryClient}>
 				{children}
-      </QueryClientProvider>
-    </api.Provider>
-  );
+			</QueryClientProvider>
+		</api.Provider>
+	);
+}
+
+export const NextAuthProvider: React.FC<{ children: React.ReactNode, }> = ({
+	children,
+}) => {
+	return <SessionProvider>{children}</SessionProvider>;
 }

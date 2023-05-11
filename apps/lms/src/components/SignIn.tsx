@@ -1,3 +1,5 @@
+"use client"
+
 import { TextLink } from '~/components/TextLink'
 import { VStack, Heading, Text } from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation';

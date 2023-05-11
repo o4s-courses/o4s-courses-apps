@@ -1,3 +1,5 @@
+'use client'
+
 import {
 	Button,
 	HTMLChakraProps,
@@ -20,7 +22,7 @@ import {
 	signIn,
 	useSession,
 } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { BuiltInProviderType } from 'next-auth/providers'
 import { useToast } from '~/components/hooks/useToast'
 import { TextLink } from '~/components/TextLink'
@@ -33,6 +35,8 @@ export const SignInForm = ({
 	defaultEmail,
 }: Props & HTMLChakraProps<'form'>) => {
 	const router = useRouter()
+	const queryParams = useSearchParams()
+	const callbackUrl = queryParams.get('callbackUrl')
 	const { status } = useSession()
 	const [authLoading, setAuthLoading] = useState(false)
 	const [isLoadingProviders, setIsLoadingProviders] = useState(true)
@@ -51,7 +55,7 @@ export const SignInForm = ({
 
 	useEffect(() => {
 		if (status === 'authenticated') {
-			router.replace(router.query.callbackUrl?.toString() ?? '/dashboard')
+			router.replace(callbackUrl?.toString() ?? '/dashboard/courses')
 			return
 		}
 		; (async () => {
@@ -59,7 +63,7 @@ export const SignInForm = ({
 			setProviders(providers ?? undefined)
 			setIsLoadingProviders(false)
 		})()
-	}, [status, router])
+	}, [status, callbackUrl, router])
 
 	const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) =>
 		setEmailValue(e.target.value)
@@ -84,6 +88,19 @@ export const SignInForm = ({
 	}
 
 	if (isLoadingProviders) return <Spinner />
+
+	if (hasNoAuthProvider)
+		return (
+			<Text>
+				'You need to '
+				<TextLink
+					href="https://docs.typebot.io/self-hosting/configuration"
+					isExternal
+				>
+					configure at least one auth provider (Email, Google, GitHub, Facebook or Azure AD).
+				</TextLink>
+			</Text>
+		)
 
 	return (
 		<Stack spacing="4" w="330px">
@@ -115,9 +132,7 @@ export const SignInForm = ({
 					)}
 				</>
 			)}
-			{router.query.error && (
-				<SignInError error={router.query.error.toString()} />
-			)}
+
 			<SlideFade offsetY="20px" in={isMagicLinkSent} unmountOnExit>
 				<Flex>
 					<Alert status="success" w="100%">

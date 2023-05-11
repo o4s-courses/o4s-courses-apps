@@ -13,6 +13,20 @@ const nextConfig = {
 		localeDetection: false,
   },*/
 
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // These rewrites are checked after headers/redirects
+        // and before all files including _next/public files which
+        // allows overriding page files
+        {
+          source: "/api/auth/:path*",
+          destination: `http://joseantcordeiro.hopto.org:4000/api/auth/:path*`,
+        },
+      ],
+    };
+  },
+
   async headers() {
     return [
       {

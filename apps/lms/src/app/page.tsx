@@ -1,6 +1,7 @@
 "use client"
 
-import { api, type RouterOutputs } from "~/utils/api";
+import { useSession } from "next-auth/react"
+import { api, type RouterOutputs } from "~/utils/api"
 
 //import { getDictionary } from '~/utils/get-dictionary'
 //import { Locale } from '~/i18n-config'
@@ -14,7 +15,7 @@ import { Box, Button, Text, useColorMode } from "@chakra-ui/react"
 //  params: { locale: Locale }
 //}) {
 export default function Page() {
-	const session = api.auth.getSession.useQuery()
+	const session = useSession()
 	const { toggleColorMode } = useColorMode()
 
 	//const dictionary = await getDictionary(locale)

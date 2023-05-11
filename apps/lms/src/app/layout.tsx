@@ -1,7 +1,7 @@
 "use client"
 
 import { ColorModeScript } from "@chakra-ui/react"
-import Provider, { TrpcProvider } from "./providers"
+import Provider, { TrpcProvider, NextAuthProvider } from "./providers"
 //import { i18n } from '../../i18n-config'
 
 //export async function generateStaticParams() {
@@ -19,14 +19,16 @@ export default function RootLayout({
 		<html lang="en" data-theme="light">
 			<head />
 			<body>
-				<ColorModeScript type="cookie" nonce="testing" />
-				<Provider>
-					<TrpcProvider>
+				<NextAuthProvider>
+					<ColorModeScript type="cookie" nonce="testing" />
+					<Provider>
+						<TrpcProvider>
 
-						{children}
+							{children}
 
-					</TrpcProvider>
-				</Provider>
+						</TrpcProvider>
+					</Provider>
+				</NextAuthProvider>
 			</body>
 		</html>
 	)

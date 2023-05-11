@@ -1,5 +1,5 @@
-import { SignIn } from '~/components/SignInPage'
+import { SignIn } from '~/components/SignIn'
 
-export default function Page() {
+export default function RegisterPage() {
 	return <SignIn type="signup" />
 }
