@@ -46,12 +46,12 @@ model User {
   emailVerified    DateTime?
   image            String?
   role             String               @default("user") @db.VarChar(10)
-  customerId       String?
   accounts         Account[]
   sessions         Session[]
-  courses          Course[]
+	payments         Payment[]
+  courses          MemberInCourse[]
   completedLessons UserLessonProgress[]
-  subscriptions    Subscription[]
+	
 }
 
 model VerificationToken {
@@ -62,37 +62,33 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Subscription {
-  user     User     @relation(fields: [userId], references: [id])
-  userId   String
-  course   Course   @relation(fields: [courseId], references: [id])
-  courseId Int
-  active   Boolean  @default(true)
-  created  DateTime @default(now())
-  expires  DateTime?
+model MemberInCourse {
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+  userId      String
+  courseId    Int
+  role        CourseRole
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course      Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
-  @@index([userId])
   @@index([courseId])
 }
 
 model Course {
   id          Int      				@id @default(autoincrement())
   name        String
-  description String					@db.VarChar(2000)
+  description String					@db.VarChar(1000)
   slug        String
-	image				String?					@db.VarChar(2000)
+	image				String?					@db.VarChar(1000)
 	published   Boolean  				@default(false)
+	createdBy   String?
 	createdAt		DateTime 				@default(now())
 	deleted			Boolean					@default(false)
 	modules			Module[]
   lessons     Lesson[]
-  author      User     				@relation(fields: [authorId], references: [id])
-  authorId    String
-  students    Subscription[]
+	members     MemberInCourse[]
   products    Product[]
-
-  @@index([authorId])
 }
 
 model Module {
@@ -142,11 +138,53 @@ model UserLessonProgress {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   description String
-	image 			String?	 @db.VarChar(2000)
-  price       Int      @default(3500)
-  currency    String   @default("EUR")
+	image 			String?   @db.VarChar(1000)
+  price       Int       @default(3500)
+  currency    String    @default("EUR")
   courses     Course[]
+	payments    Payment[]
+}
+
+model Payment {
+	id          String  	    @id @default(cuid())
+	createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+	status      PaymentStatus
+	value       Int
+	type				PaymentType
+	gateway			String
+	customerId  String
+	paymentId   String
+	userId      String
+	payedBy     User          @relation(fields: [userId], references: [id])
+	products    Product[]
+
+	@@index([userId])
+}
+
+enum CourseRole {
+  ADMIN
+	AUTHOR
+  TEACHER
+	OBSERVATOR
+  STUDENT
+}
+
+enum PaymentType {
+	CC
+	SEPA
+	PAYPAL
+	BOLETO
+	PIX
+}
+
+enum PaymentStatus {
+	PAID
+	WAITING
+	REFUNDED
+	CANCELLED
+	ERROR
 }

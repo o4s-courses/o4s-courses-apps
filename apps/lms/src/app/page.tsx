@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react"
 import { api, type RouterOutputs } from "~/utils/api"
 
+import { getCookie, getCookies } from "typescript-cookie";
 //import { getDictionary } from '~/utils/get-dictionary'
 //import { Locale } from '~/i18n-config'
 
@@ -18,6 +19,8 @@ export default function Page() {
 	const session = useSession()
 	const { toggleColorMode } = useColorMode()
 
+	const cookies = getCookies()
+
 	//const dictionary = await getDictionary(locale)
 
 	return (
@@ -32,6 +35,7 @@ export default function Page() {
 
 			<Box textAlign="center" fontSize="xl">
 				<Text>Session: {JSON.stringify(session)}</Text>
+				<Text>Cookies: {JSON.stringify(cookies)}</Text>
 			</Box>
 
 		</div>

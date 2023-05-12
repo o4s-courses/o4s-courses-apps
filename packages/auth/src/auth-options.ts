@@ -3,6 +3,7 @@ import { type DefaultSession, type NextAuthOptions } from "next-auth";
 import EmailProvider from "next-auth/providers/email";
 
 import { prisma } from "@o4s/db";
+
 import { sendVerificationRequest } from "./utils/sendVerificationRequest";
 
 /**
@@ -32,6 +33,9 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  **/
 export const authOptions: NextAuthOptions = {
+  session: {
+    strategy: "database",
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     EmailProvider({
@@ -40,23 +44,34 @@ export const authOptions: NextAuthOptions = {
         port: Number(process.env.EMAIL_SERVER_PORT),
         auth: {
           user: process.env.EMAIL_SERVER_USER,
-          pass: process.env.EMAIL_SERVER_PASSWORD
-        }
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
       },
       from: process.env.EMAIL_FROM,
-			sendVerificationRequest,
+      sendVerificationRequest,
     }),
   ],
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/require-await
     async session({ session, token, user }) {
       if (session.user) {
-        session.user.id = user.id
-        session.user.role = user.role
+        session.user.id = user.id;
+        session.user.role = user.role;
       }
-
-      return session
-    }
-  }
+      console.log("Session Callback", { session, token, user });
+      return session;
+    },
+    jwt: ({ token, user }) => {
+      console.log("JWT Callback", { token, user });
+      if (user) {
+        const u = user as unknown as any;
+        token.role = u.role;
+        return {
+          ...token,
+          ...user,
+        };
+      }
+      return token;
+    },
+  },
 };
-

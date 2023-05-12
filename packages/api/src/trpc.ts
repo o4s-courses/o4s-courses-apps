@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1)
@@ -44,6 +43,34 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
   };
 };
 
+async function getDBSession(token: string) {
+  const dbSession = await prisma.session.findUnique({
+    where: {
+      sessionToken: token,
+    },
+    select: {
+      expires: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          image: true,
+          role: true,
+        },
+      },
+    },
+  });
+
+  if (!dbSession) {
+    return null;
+  }
+
+  return {
+    user: dbSession.user,
+    expires: dbSession.expires.toISOString(),
+  };
+}
 /**
  * This is the actual context you'll use in your router. It will be used to
  * process every request that goes through your tRPC endpoint
@@ -51,8 +78,18 @@ const createInnerTRPCContext = (opts: CreateContextOptions) => {
  */
 export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   const { req, res } = opts;
+  const authorization = req.headers.authorization;
 
-  // Get the session from the server using the unstable_getServerSession wrapper function
+  if (!(authorization === undefined)) {
+    const token = String(authorization.split(" ")[1]);
+    const session: Session | null = await getDBSession(token);
+
+    console.log(JSON.stringify(session));
+    return createInnerTRPCContext({
+      session,
+    });
+  }
+
   const session = await getServerSession({ req, res });
 
   return createInnerTRPCContext({
@@ -119,7 +156,7 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
 });
 
 const enforceUserIsAdmin = t.middleware(({ ctx, next }) => {
-  if (!(ctx.session?.user.role === 'admin')) {
+  if (!(ctx.session?.user.role === "admin")) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
   return next({

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import type Prisma from "prisma";
-import { PrismaClient } from "@prisma/client";
-import { createPrismaRedisCache } from "prisma-redis-middleware";
+
+import { PrismaClient, type Session as PrismaSession } from "@prisma/client";
 import Redis from "ioredis";
+import type Prisma from "prisma";
+import { createPrismaRedisCache } from "prisma-redis-middleware";
 
 const redis = new Redis({
   port: Number(process.env.CACHE_PORT), // Redis port
@@ -17,7 +18,14 @@ const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
     { model: "Lesson", excludeMethods: ["findFirst"] },
     // { model: "Post", cacheTime: 180, cacheKey: "lesson" },
   ],
-  storage: { type: "redis", options: { client: redis, invalidation: { referencesTTL: 300 }, log: console } },
+  storage: {
+    type: "redis",
+    options: {
+      client: redis,
+      invalidation: { referencesTTL: 300 },
+      log: console,
+    },
+  },
   cacheTime: 300,
   excludeModels: ["Session"],
   excludeMethods: ["count", "groupBy"],
@@ -32,8 +40,17 @@ const cacheMiddleware: Prisma.Middleware = createPrismaRedisCache({
   },
 });
 
+type ModifiedSession = Pick<PrismaSession, "expires"> & { expires: string };
+
+function modifySession(session: PrismaSession): ModifiedSession {
+  // converts bigint to number
+  return { ...session, expires: toString(session.expires) };
+}
+
 export * from "@prisma/client";
 export * from "./db";
+export * from "./src/sanitisePrismaObject";
+export { modifySession as Session, modifySession };
 
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
@@ -49,4 +66,3 @@ export const prisma =
 if (!process.env.IS_ADMIN) prisma.$use(cacheMiddleware);
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
-

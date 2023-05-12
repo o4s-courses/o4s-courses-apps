@@ -40,9 +40,9 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
 					url: url,
 					// You can pass any HTTP headers you wish here
 					//async headers() {
-					//  return {
-					//    authorization: getAuthCookie(),
-					//  };
+					//	return {
+					//		authorization: `Bearer ${getCookie('next-auth.session-token')}`,
+					//	};
 					//},
 				}),
 			],
