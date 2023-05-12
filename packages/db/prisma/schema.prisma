@@ -51,7 +51,7 @@ model User {
 	payments         Payment[]
   courses          MemberInCourse[]
   completedLessons UserLessonProgress[]
-	
+	assignments      StudentAssignment[]
 }
 
 model VerificationToken {
@@ -116,12 +116,15 @@ model Lesson {
 	module				 Module								@relation(fields: [moduleId], references: [id])
 	moduleId			 Int
   html       		 String?  						@db.LongText
-  coverImage 		 String?  						@db.VarChar(2000)
+  coverImage 		 String?  						@db.VarChar(1000)
   status     		 String   						@default("draft") @db.VarChar(50)
 	createdAt			 DateTime 						@default(now())
 	updatedAt			 DateTime?						@updatedAt
 	deleted				 Boolean							@default(false)
   usersCompleted UserLessonProgress[]
+	assignments    Assignment[]
+	links          Link[]
+	files          File[]
 
   @@index([courseId])
 	@@index([moduleId])
@@ -129,14 +132,72 @@ model Lesson {
 
 model UserLessonProgress {
   user        User     @relation(fields: [userId], references: [id])
-  userId      String // relation scalar field (used in the `@relation` attribute above)
+  userId      String
   lesson      Lesson   @relation(fields: [lessonId], references: [id])
-  lessonId    Int // relation scalar field (used in the `@relation` attribute above)
+  lessonId    Int
   completedAt DateTime @default(now())
 
   @@id([userId, lessonId])
   @@index([userId])
   @@index([lessonId])
+}
+
+model Assignment {
+	id                 Int               @id @default(autoincrement())
+	title              String
+	type               String
+	dueDate            DateTime?
+	priority           Int
+	lessonId           Int
+	lesson             Lesson            @relation(fields: [lessonId], references: [id])
+	files              File[]
+	links              Link[]
+	studentAssignments StudentAssignment[]
+  
+  @@index([lessonId])
+}
+
+model StudentAssignment {
+  user         User             @relation(fields: [userId], references: [id])
+  userId       String
+	assignmentId Int
+  asignment    Assignment       @relation(fields: [assignmentId], references: [id])
+	status       AssignmentStatus @default(INPROGRESS)
+	startedAt    DateTime         @default(now())
+  completedAt  DateTime?
+
+  @@id([userId, assignmentId])
+  @@index([userId])
+  @@index([assignmentId])
+}
+
+model File {
+	id           Int         @id @default(autoincrement())
+	name         String
+  url          String      @db.VarChar(1000)
+	downloads    Int         @default(0)
+	lessonId     Int?
+	lesson       Lesson?     @relation(fields: [lessonId], references: [id])
+	assignmentId Int?
+	assignment   Assignment? @relation(fields: [assignmentId], references: [id])
+
+	@@index([lessonId])
+	@@index([assignmentId])
+}
+
+model Link {
+	id           Int        @id @default(autoincrement())
+	name         String
+	ref          String     @db.VarChar(1000)
+	isExternal   Boolean    @default(true)
+	clicks       Int        @default(0)
+	lessonId     Int?
+	lesson       Lesson?     @relation(fields: [lessonId], references: [id])
+	assignmentId Int?
+	assignment   Assignment? @relation(fields: [assignmentId], references: [id])
+
+	@@index([lessonId])
+	@@index([assignmentId])
 }
 
 model Product {
@@ -173,6 +234,12 @@ enum CourseRole {
   TEACHER
 	OBSERVATOR
   STUDENT
+}
+
+enum AssignmentStatus {
+	INPROGRESS
+	COMPLETE
+	NOTSARTED
 }
 
 enum PaymentType {
