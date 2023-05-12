@@ -1,8 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    appDir: true,
+  },
   reactStrictMode: true,
   /** Enables hot reloading for local packages without a build step */
-  transpilePackages: ["@o4s/api", "@o4s/auth", "@o4s/db"],
+  transpilePackages: ["@o4s/api", "@o4s/auth", "@o4s/db", "@o4s/comm"],
   /** We already do linting and typechecking as separate tasks in CI */
   eslint: { ignoreDuringBuilds: !!process.env.CI },
   typescript: { ignoreBuildErrors: !!process.env.CI },
@@ -20,8 +23,8 @@ const nextConfig = {
         // and before all files including _next/public files which
         // allows overriding page files
         {
-          source: "/api/auth/:path*",
-          destination: `http://joseantcordeiro.hopto.org:4000/api/auth/:path*`,
+          source: "/api/:path*",
+          destination: `http://joseantcordeiro.hopto.org:4000/api/:path*`,
         },
       ],
     };

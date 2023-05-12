@@ -167,12 +167,18 @@ importers:
       '@o4s/auth':
         specifier: ^0.1.0
         version: link:../../packages/auth
+      '@o4s/comm':
+        specifier: ^0.1.0
+        version: link:../../packages/comm
       '@o4s/db':
         specifier: ^0.1.0
         version: link:../../packages/db
       '@o4s/eslint-config':
         specifier: ^0.1.0
         version: link:../../packages/config/eslint
+      '@o4s/tsconfig':
+        specifier: ^0.1.0
+        version: link:../../packages/config/tsconfig
       '@t3-oss/env-nextjs':
         specifier: ^0.2.2
         version: 0.2.2(zod@3.21.4)
@@ -451,6 +457,8 @@ importers:
       tailwindcss:
         specifier: ^3.3.2
         version: 3.3.2
+
+  packages/config/tsconfig: {}
 
   packages/db:
     dependencies:
