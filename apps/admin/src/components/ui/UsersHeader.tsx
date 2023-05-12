@@ -2,25 +2,19 @@ import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { Toast } from 'primereact/toast';
-import { api, type RouterOutputs } from "~/utils/api";
 
-type Users = RouterOutputs[user][byUserRole]
+type Props = {
+	currentFilter: string;
+	onUserFilter: (role: string) => void;
+}
 
-const UsersHeader = ({ id, name, published, onCourseDelete }: Props) => {
+const UsersHeader = ({ currentFilter, onUserFilter }: Props) => {
 	const router = useRouter();
 	const toast = useRef<Toast>(null);
-	const [currentFilter, changeFilter] = useState("ALL");
-
-	const reject = () => {
-		toast.current?.show({ severity: 'warn', summary: 'Rejected', detail: 'You have rejected', life: 6000 });
-	};
 
 	const filter = (event) => {
 		const userType = event.target.getAttribute('filter-arg');
-
-		const users = api.user.byUserRole.useQuery({ skip: 0, take: 50, role: userType });
-
-		changeFilter(userType);
+		onUserFilter(userType);
 	}
 
 	return (
@@ -40,12 +34,12 @@ const UsersHeader = ({ id, name, published, onCourseDelete }: Props) => {
 						<i className="pi pi-angle-right text-500 line-height-3"></i>
 					</li>
 					<li>
-						<span className="text-900 line-height-3">Manage Users - {currentFilter}</span>
+						<span className="text-900 line-height-3">Manage Users</span>
 					</li>
 				</ul>
 				<div className="flex align-items-start flex-column lg:justify-content-between lg:flex-row">
 					<div>
-						<div className="font-medium text-3xl text-900">{id} : {name}</div>
+						<div className="font-medium text-3xl text-900">Filter: {currentFilter}</div>
 						<div className="flex align-items-center text-700 flex-wrap">
 							<div className="mr-5 flex align-items-center mt-3">
 								<i className="pi pi-users mr-2"></i>
@@ -63,11 +57,11 @@ const UsersHeader = ({ id, name, published, onCourseDelete }: Props) => {
 					</div>
 					<div className="mt-3 lg:mt-0">
 						<Button label="Invite" className="p-button-outlined mr-2" icon="pi pi-user-plus" />
-						<Button label="Teachers" filter-arg="TEACHER" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button label="Students" filter-arg="STUDENT" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button label="Observators" filter-arg="OBSERVATOR" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button label="Authors" filter-arg="AUTHOR" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button label="Administrators" filter-arg="ADMIN" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter }} label="Teachers" filter-arg="TEACHER" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter }} label="Students" filter-arg="STUDENT" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter }} label="Observators" filter-arg="OBSERVATOR" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter }} label="Authors" filter-arg="AUTHOR" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter }} label="Administrators" filter-arg="ADMIN" className="p-button-outlined mr-2" icon="pi pi-user" />
 					</div>
 				</div>
 			</div>

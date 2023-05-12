@@ -1,18 +1,20 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { api, type RouterOutputs } from "~/utils/api";
 
 import Header from "~/components/ui/Header";
 import Nav from "~/components/ui/Nav";
 import SectionWrapper from "~/components/SectionWrapper";
-import CourseHeader from "~/components/ui/CourseHeader";
+import UsersHeader from "~/components/ui/UsersHeader";
 import Loading from "~/components/ui/Loading";
-import ModulesList from "~/components/ui/ModuleList";
+import UsersList from "~/components/ui/UsersList";
 import { Toast } from "primereact/toast";
 
 const ManageUsers = () => {
 	const router = useRouter();
 	const toast = useRef<Toast>(null);
+	const [currentFilter, changeFilter] = useState("ALL");
+	const [filterError, setFilterError] = useState(false);
 
 	//if (typeof courseId !== "string") {
 	//  throw new Error("missing id");
@@ -20,14 +22,14 @@ const ManageUsers = () => {
 
 	const userQuery = api.user.all.useQuery({ skip: 0, take: 50 });
 
-	const deleteCourseMutation = api.course.delete.useMutation({
-		onSettled: () => {
-			void courseQuery.refetch();
-			void router.push('/');
-			toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Course deleted successfully', life: 3000 });
+	const filterUsers = api.user.byUserRole.useQuery({
+		onSuccess() {
+			setFilterError(false);
+			toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Filter users successfully', life: 3000 });
 		},
 		onError: (error) => {
 			console.error(error);
+			setFilterError(true);
 			toast.current?.show({ severity: 'error', summary: 'Error', detail: 'Something went wrong', life: 3000 });
 		},
 	});
@@ -35,15 +37,16 @@ const ManageUsers = () => {
 	return (
 		<><Toast ref={toast} />
 			{userQuery.data ? (
-				<><Header title={courseQuery.data.name} />
+				<><Header title={'Manage Users'} />
 					<Nav />
-					<CourseHeader
-						id={courseQuery.data.id}
-						name={courseQuery.data.name}
-						published={courseQuery.data.published}
-						onCourseDelete={() => deleteCourseMutation.mutate(courseQuery.data.id)} />
+					<UsersHeader
+						currentFilter={currentFilter} onUserFilter={(role: string) => filterUsers.useQuery({ skip: 0, take: 50, role: role })} />
 					<SectionWrapper className="mt-0">
-						<UsersList users={userQuery.data} />
+						{currentFilter === "ALL" ? (
+							<UsersList users={userQuery.data} />
+						) : (
+							<UsersList users={filterUsers.data} />
+						)}
 					</SectionWrapper>
 				</>
 			) : (
