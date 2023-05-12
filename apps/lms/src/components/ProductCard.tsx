@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Button, Card, CardBody, CardFooter, Heading, Stack, Image, Text } from "@chakra-ui/react";
 import { RouterOutputs } from "~/utils/api";
 

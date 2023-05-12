@@ -1,7 +1,10 @@
-"use client"
+"use client";
 
-import { ColorModeScript } from "@chakra-ui/react"
-import Provider, { TrpcProvider, NextAuthProvider } from "./providers"
+import React from "react";
+
+import { ColorModeScript } from "@chakra-ui/react";
+import Provider, { TrpcProvider, NextAuthProvider } from "./providers";
+
 //import { i18n } from '../../i18n-config'
 
 //export async function generateStaticParams() {

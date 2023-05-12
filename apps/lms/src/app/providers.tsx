@@ -1,13 +1,14 @@
-"use client"
+"use client";
 
-import { CacheProvider } from "@chakra-ui/next-js"
-import { ChakraProvider, cookieStorageManager } from "@chakra-ui/react"
+import React, { useState } from "react";
 
-import { SessionProvider } from "next-auth/react"
+import { CacheProvider } from "@chakra-ui/next-js";
+import { ChakraProvider, cookieStorageManager } from "@chakra-ui/react";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { httpBatchLink } from '@trpc/client';
-import React, { useState } from 'react';
+import { SessionProvider } from "next-auth/react";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { httpBatchLink } from "@trpc/client";
 import superjson from "superjson";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { api } from "~/utils/api";

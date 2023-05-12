@@ -1,9 +1,12 @@
-"use client"
+"use client";
+
+import React from 'react';
 
 import { TextLink } from '~/components/TextLink'
 import { VStack, Heading, Text } from '@chakra-ui/react'
 import { useSearchParams } from 'next/navigation';
 import { SignInForm } from '~/components/forms/SignInForm'
+
 
 type Props = {
 	type: 'signin' | 'signup'
@@ -12,7 +15,7 @@ type Props = {
 
 export const SignIn = ({ type, defaultEmail }: Props) => {
 	const queryParams = useSearchParams()
-	const query = queryParams.get('g')
+	const email = queryParams.get('email')
 
 	return (
 		<VStack spacing={4} h="100vh" justifyContent="center">
@@ -37,7 +40,7 @@ export const SignIn = ({ type, defaultEmail }: Props) => {
 					</TextLink>
 				</Text>
 			)}
-			<SignInForm defaultEmail={query?.toString()} />
+			<SignInForm defaultEmail={email?.toString()} />
 		</VStack>
 	)
 }

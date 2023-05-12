@@ -1,6 +1,7 @@
 {
   "extends": "@o4s/tsconfig/nextjs.json",
   "compilerOptions": {
+    "jsx": "react",
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
