@@ -63,15 +63,17 @@ model VerificationToken {
 }
 
 model MemberInCourse {
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now()) @updatedAt
-  userId      String
-  courseId    Int
-  role        CourseRole
-  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course      Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now()) @updatedAt
+	lastActivity DateTime?
+  userId       String
+  courseId     Int
+  role         CourseRole
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course       Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@unique([userId, courseId])
+	@@index([userId])
   @@index([courseId])
 }
 

@@ -24,6 +24,19 @@ export const courseRouter = createTRPCRouter({
           id: true,
           name: true,
           published: true,
+          members: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  image: true,
+                },
+              },
+              role: true,
+            },
+          },
           modules: {
             where: { deleted: false },
             orderBy: { pos: "asc" },
@@ -52,7 +65,7 @@ export const courseRouter = createTRPCRouter({
   byAuthor: adminProcedure.query(({ ctx }) => {
     return ctx.prisma.course.findMany({
       where: {
-        authorId: ctx.session.user.id,
+        createdBy: ctx.session.user.id,
         deleted: false,
       },
       select: {
@@ -65,7 +78,7 @@ export const courseRouter = createTRPCRouter({
           select: {
             modules: true,
             lessons: true,
-            students: true,
+            members: true,
           },
         },
       },
@@ -87,11 +100,7 @@ export const courseRouter = createTRPCRouter({
           description: input.description,
           slug: slugify(input.name),
           image: input.image,
-          author: {
-            connect: {
-              id,
-            },
-          },
+          createdBy: id,
         },
       });
     }),

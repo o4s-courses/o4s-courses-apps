@@ -1,15 +1,17 @@
 import { authRouter } from "./router/auth";
-import { moduleRouter } from "./router/module";
 import { courseRouter } from "./router/course";
-import { createTRPCRouter } from "./trpc";
 import { lessonRouter } from "./router/lesson";
+import { moduleRouter } from "./router/module";
 import { productRouter } from "./router/product";
+import { userRouter } from "./router/user";
+import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
-	course: courseRouter,
+  user: userRouter,
+  course: courseRouter,
   module: moduleRouter,
-	lesson: lessonRouter,
-	product: productRouter,
+  lesson: lessonRouter,
+  product: productRouter,
   auth: authRouter,
 });
 

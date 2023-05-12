@@ -14,6 +14,7 @@ import {
 import { ReactNode } from 'react';
 import { FaInstagram, FaTwitter, FaFacebook } from 'react-icons/fa';
 import { BiMailSend } from 'react-icons/bi';
+import { TextLink } from './TextLink';
 //import { getDictionary } from '~/utils/get-dictionary'
 //import { Locale } from '~/i18n-config'
 
@@ -89,7 +90,13 @@ export default function LargeWithNewsletter() {
 							<Logo color={useColorModeValue('gray.700', 'white')} />
 						</Box>
 						<Text fontSize={'sm'}>
-							© 2023 José Cordeiro. All rights reserved
+							© 2023 José Cordeiro. All rights reserved. Built with ❤️ by{' '}
+							<TextLink
+								href="https://github.com/joseantcordeiro"
+								isExternal
+							>
+								jose
+							</TextLink>jose
 						</Text>
 						<Stack direction={'row'} spacing={6}>
 							<SocialButton label={'Twitter'} href={'#'}>
