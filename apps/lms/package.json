@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "pnpm with-env next build",
+    "build:docker": "next build",
     "clean": "git clean -xdf .next .turbo node_modules",
     "dev": "pnpm with-env next dev",
     "lint": "dotenv -v SKIP_ENV_VALIDATION=1 next lint",
