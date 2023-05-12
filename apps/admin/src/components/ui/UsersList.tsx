@@ -1,7 +1,6 @@
 import { api, type RouterOutputs } from "~/utils/api";
 import Loading from "./Loading";
-import LessonsTable from "./LessonsTable";
-import CreateModuleForm from "../forms/CreateModuleForm";
+import UsersTable from "./UsersTable";
 
 type Users = RouterOutputs["user"]["all"];
 

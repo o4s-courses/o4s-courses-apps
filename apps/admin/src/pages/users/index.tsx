@@ -45,7 +45,7 @@ const ManageUsers = () => {
 						{currentFilter === "ALL" ? (
 							<UsersList users={userQuery.data} />
 						) : (
-							<UsersList users={filterUsers.data} />
+							<UsersList users={filterUsers.data.user} />
 						)}
 					</SectionWrapper>
 				</>

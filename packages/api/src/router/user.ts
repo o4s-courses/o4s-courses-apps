@@ -1,11 +1,6 @@
 import { z } from "zod";
 
-import {
-  adminProcedure,
-  createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
-} from "../trpc";
+import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const userRouter = createTRPCRouter({
   all: adminProcedure
@@ -20,6 +15,14 @@ export const userRouter = createTRPCRouter({
         orderBy: { id: "desc" },
         skip: input.skip,
         take: input.take,
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          emailVerified: true,
+          image: true,
+          role: true,
+        },
       });
     }),
   byUserRole: adminProcedure
@@ -40,7 +43,10 @@ export const userRouter = createTRPCRouter({
             select: {
               id: true,
               name: true,
+              email: true,
+              emailVerified: true,
               image: true,
+              role: true,
             },
           },
         },
