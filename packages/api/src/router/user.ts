@@ -25,6 +25,11 @@ export const userRouter = createTRPCRouter({
             select: {
               courseId: true,
               role: true,
+              course: {
+                select: {
+                  name: true,
+                },
+              },
             },
           },
         },

@@ -77,10 +77,31 @@ const UsersTable: React.FC<{
 		return <Calendar value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />;
 	};
 
+	const expandAll = () => {
+		const _expandedRows: DataTableExpandedRows = {};
+
+		users.forEach((p) => (_expandedRows[`${p.id}`] = true));
+
+		setExpandedRows(_expandedRows);
+	};
+
+	const collapseAll = () => {
+		setExpandedRows(null);
+	};
+
+	const allowExpansion = (rowData) => {
+		// return true;
+		return rowData.courses.length > 0;
+	};
+
 	const renderHeader = () => {
 		return (
 			<div className="flex flex-wrap gap-2 justify-content-between align-items-center">
 				<h4 className="m-0">Users</h4>
+				<div className="flex flex-wrap justify-content-end gap-2">
+					<Button icon="pi pi-plus" label="Expand All" onClick={expandAll} text />
+					<Button icon="pi pi-minus" label="Collapse All" onClick={collapseAll} text />
+				</div>
 				<span className="p-input-icon-left">
 					<i className="pi pi-search" />
 					<InputText value={globalFilterValue} onChange={onGlobalFilterChange} placeholder="Keyword Search" />
@@ -112,23 +133,6 @@ const UsersTable: React.FC<{
 
 	const header = renderHeader();
 
-	const expandAll = () => {
-		const _expandedRows: DataTableExpandedRows = {};
-
-		modules.forEach((p) => (_expandedRows[`${p.id}`] = true));
-
-		setExpandedRows(_expandedRows);
-	};
-
-	const collapseAll = () => {
-		setExpandedRows(null);
-	};
-
-	const allowExpansion = (rowData) => {
-		return true;
-		// return rowData.lessons.length > 0;
-	};
-
 	const rowExpansionTemplate = (data) => {
 		return (
 			<div className="px-5">
@@ -139,6 +143,7 @@ const UsersTable: React.FC<{
 					tableStyle={{ minWidth: '50rem' }}
 				>
 					<Column field="courseId" header="#" style={{ width: '5%' }}></Column>
+					<Column field="course.name" header="Course" style={{ width: '50%' }}></Column>
 					<Column field="role" header="Role" style={{ minWidth: '12rem' }} body={roleBodyTemplate} />
 				</DataTable>
 			</div>
@@ -152,11 +157,11 @@ const UsersTable: React.FC<{
 					paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
 					rowsPerPageOptions={[10, 25, 50]} dataKey="id" selectionMode="checkbox" selection={selectedUsers} onSelectionChange={(e) => setSelectedUsers(e.value)}
 					expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)} rowExpansionTemplate={rowExpansionTemplate}
-					filters={filters} filterDisplay="menu" globalFilterFields={['name', 'email', 'representative.name', 'balance', 'status']}
+					filters={filters} filterDisplay="menu" globalFilterFields={['name', 'email']}
 					emptyMessage="No users found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
 					<Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
 					<Column expander={allowExpansion} style={{ width: '3rem' }} />
-					<Column field="image" style={{ minWidth: '6rem' }} body={imageBodyTemplate} />
+					<Column field="image" style={{ minWidth: '3rem' }} body={imageBodyTemplate} />
 					<Column field="name" header="Name" sortable filter filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
 					<Column field="email" header="Email" sortable filter filterPlaceholder="Search by email" style={{ minWidth: '14rem' }} />
 					<Column field="emailVerified" header="Date" sortable filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filter filterElement={dateFilterTemplate} />

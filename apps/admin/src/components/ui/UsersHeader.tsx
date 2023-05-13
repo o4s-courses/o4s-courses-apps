@@ -1,7 +1,3 @@
-
-
-
-
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Button } from "primereact/button";
