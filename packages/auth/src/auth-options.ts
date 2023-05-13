@@ -53,6 +53,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/require-await
+    async redirect({ url, baseUrl }) {
+      // Allows relative callback URLs
+      console.log(`url: ${url} - baseUrl: ${baseUrl}`);
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
+      return baseUrl;
+    },
+    // eslint-disable-next-line @typescript-eslint/require-await
     async session({ session, token, user }) {
       if (session.user) {
         session.user.id = user.id;

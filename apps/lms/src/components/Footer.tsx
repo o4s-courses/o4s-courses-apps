@@ -99,7 +99,7 @@ export default function LargeWithNewsletter() {
 								isExternal
 							>
 								jose
-							</TextLink>jose
+							</TextLink>
 						</Text>
 						<Stack direction={'row'} spacing={6}>
 							<SocialButton label={'Twitter'} href={'#'}>

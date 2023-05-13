@@ -1,10 +1,12 @@
 {
   "extends": "@o4s/tsconfig/nextjs.json",
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["src/*"]
+      "~/*": [
+        "src/*"
+      ]
     }
   },
   "include": [
@@ -15,5 +17,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,5 +1,6 @@
 "use client"
 
+import React from "react";
 import { useSession } from "next-auth/react"
 import { api, type RouterOutputs } from "~/utils/api"
 
@@ -16,7 +17,7 @@ import { Box, Button, Text, useColorMode } from "@chakra-ui/react"
 //  params: { locale: Locale }
 //}) {
 export default function Page() {
-	const session = useSession()
+	const { data: session } = useSession()
 	const { toggleColorMode } = useColorMode()
 
 	const cookies = getCookies()

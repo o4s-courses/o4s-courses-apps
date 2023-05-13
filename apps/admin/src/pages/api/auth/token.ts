@@ -9,12 +9,11 @@ export default async function handler(
 ) {
   // if using `NEXTAUTH_SECRET` env variable, we detect it, and you won't actually need to `secret`
   // const token = await getToken({ req })
-  let token: JWT = await getToken({ req, secret });
+  const token = await getToken({ req });
   if (!token) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  token = JSON.stringify(token);
   console.log("JSON Web Token", token);
-  res.status(200).json({ jwt: token });
+  res.status(200).json(JSON.stringify(token));
   res.end();
 }

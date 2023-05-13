@@ -75,6 +75,7 @@ export const SignInForm = ({
 		const response = await signIn('email', {
 			email: emailValue,
 			redirect: false,
+			callbackUrl: 'http://joseantcordeiro.hopto.org:3000',
 		})
 		if (response?.error) {
 			showToast({

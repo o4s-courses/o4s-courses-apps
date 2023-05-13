@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { useSession } from "next-auth/react";
 import { api, type RouterOutputs } from "~/utils/api";
 
 //import { getDictionary } from '~/utils/get-dictionary'
@@ -11,7 +12,7 @@ import { Link } from "@chakra-ui/next-js"
 import { Box, Button, Text, useColorMode } from "@chakra-ui/react"
 import Loading from "~/components/Loading";
 
-type Course = RouterOutputs["course"]["all"][number]
+type Course = RouterOutputs["course"]["all"]
 
 //export default function DashboardCourses({
 //  params: { locale },
@@ -19,6 +20,7 @@ type Course = RouterOutputs["course"]["all"][number]
 //  params: { locale: Locale }
 //}) {
 export default function DashboardCourses() {
+	const { data: session } = useSession();
 	const { data: courses, isLoading } = api.course.all.useQuery()
 
 	if (isLoading) {
@@ -33,10 +35,12 @@ export default function DashboardCourses() {
 			</Box>
 
 			<Box textAlign="center" fontSize="xl">
-				{courses?.map((course: Course) => (
-					<><p>{course.id}</p>
-						<p>{course.name}</p></>
-				))}
+				<Text>Session: {JSON.stringify(session)}</Text>
+				<ul>
+					{courses?.map((c) => (
+						<li key={c.id}>{c.id} - {c.name}</li>
+					))}
+				</ul>
 			</Box>
 		</>
 

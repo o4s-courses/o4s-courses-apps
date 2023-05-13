@@ -2,6 +2,7 @@
 
 import React from "react";
 
+import { type Session } from "@o4s/auth";
 import { ColorModeScript } from "@chakra-ui/react";
 import Provider, { TrpcProvider, NextAuthProvider } from "./providers";
 
@@ -13,25 +14,19 @@ import Provider, { TrpcProvider, NextAuthProvider } from "./providers";
 
 export default function RootLayout({
 	children,
-	//params,
+	params,
 }: {
 	children: React.ReactNode,
-	//params: { locale: string },
+	params: { session: Session },
 }) {
 	return (
 		<html lang="en" data-theme="light">
 			<head />
 			<body>
-				<NextAuthProvider>
-					<ColorModeScript type="cookie" nonce="testing" />
-					<Provider>
-						<TrpcProvider>
-
-							{children}
-
-						</TrpcProvider>
-					</Provider>
-				</NextAuthProvider>
+				<ColorModeScript type="cookie" nonce="testing" />
+				<Provider>
+					{children}
+				</Provider>
 			</body>
 		</html>
 	)

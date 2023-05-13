@@ -5,7 +5,8 @@ import React, { useState } from "react";
 import { CacheProvider } from "@chakra-ui/next-js";
 import { ChakraProvider, cookieStorageManager } from "@chakra-ui/react";
 
-import { SessionProvider } from "next-auth/react";
+import { type Session } from "@o4s/auth";
+import { SessionProvider, useSession } from "next-auth/react";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
@@ -19,11 +20,15 @@ export default function RootLayout({
 	children: React.ReactNode,
 }) {
 	return (
-		<CacheProvider>
-			<ChakraProvider colorModeManager={cookieStorageManager}>
-				{children}
-			</ChakraProvider>
-		</CacheProvider>
+		<SessionProvider>
+			<CacheProvider>
+				<ChakraProvider colorModeManager={cookieStorageManager}>
+					<TrpcProvider>
+						{children}
+					</TrpcProvider>
+				</ChakraProvider>
+			</CacheProvider>
+		</SessionProvider>
 	)
 }
 
@@ -62,5 +67,6 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
 export const NextAuthProvider: React.FC<{ children: React.ReactNode, }> = ({
 	children,
 }) => {
-	return <SessionProvider>{children}</SessionProvider>;
+	const { data: session, status } = useSession();
+	return <SessionProvider session={session}>{children}</SessionProvider >;
 }
