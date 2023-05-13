@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
+
+
+
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
 import { Button } from "primereact/button";
@@ -16,8 +16,7 @@ const UsersHeader = ({ currentFilter, onUserFilter }: Props) => {
 	const router = useRouter();
 	const toast = useRef<Toast>(null);
 
-	const filter = (event) => {
-		const userType = event.target.getAttribute('filter-arg');
+	const filter = (userType: string) => {
 		onUserFilter(userType);
 	}
 
@@ -61,11 +60,11 @@ const UsersHeader = ({ currentFilter, onUserFilter }: Props) => {
 					</div>
 					<div className="mt-3 lg:mt-0">
 						<Button label="Invite" className="p-button-outlined mr-2" icon="pi pi-user-plus" />
-						<Button onClick={() => { filter }} label="Teachers" filter-arg="TEACHER" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button onClick={() => { filter }} label="Students" filter-arg="STUDENT" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button onClick={() => { filter }} label="Observators" filter-arg="OBSERVATOR" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button onClick={() => { filter }} label="Authors" filter-arg="AUTHOR" className="p-button-outlined mr-2" icon="pi pi-user" />
-						<Button onClick={() => { filter }} label="Administrators" filter-arg="ADMIN" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter("TEACHER") }} label="Teachers" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter("STUDENT") }} label="Students" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter("OBSERVATOR") }} label="Observators" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter("AUTHOR") }} label="Authors" className="p-button-outlined mr-2" icon="pi pi-user" />
+						<Button onClick={() => { filter("ADMIN") }} label="Administrators" className="p-button-outlined mr-2" icon="pi pi-user" />
 					</div>
 				</div>
 			</div>

@@ -40,7 +40,7 @@ const ManageUsers = () => {
 				<><Header title={'Manage Users'} />
 					<Nav />
 					<UsersHeader
-						currentFilter={currentFilter} onUserFilter={(role: string) => filterUsers.useQuery({ skip: 0, take: 50, role: role })} />
+						currentFilter={currentFilter} onUserFilter={(role: string) => filterUsers.refetch({ skip: 0, take: 50, role: role })} />
 					<SectionWrapper className="mt-0">
 						{currentFilter === "ALL" ? (
 							<UsersList users={userQuery.data} />

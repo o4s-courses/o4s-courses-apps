@@ -20,32 +20,32 @@ const UsersTable: React.FC<{
 	users: Users;
 }> = ({ users }) => {
 	const toast = useRef<Toast>(null);
+	const [expandedRows, setExpandedRows] = useState<DataTableExpandedRows>(null);
 	const [selectedUsers, setSelectedUsers] = useState([]);
 	const [filters, setFilters] = useState({
 		global: { value: null, matchMode: FilterMatchMode.CONTAINS },
 		name: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
 		email: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-		date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-		role: { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] }
+		date: { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] }
 	});
 	const [globalFilterValue, setGlobalFilterValue] = useState('');
-	const [roles] = useState(['admin', 'user', 'new', 'negotiation', 'renewal']);
+	const [roles] = useState(['STUDENT', 'TEACHER', 'AUTHOR', 'ADMIN', 'OBSERVATOR']);
 
 	const getSeverity = (role) => {
 		switch (role) {
-			case 'admin':
+			case 'ADMIN':
 				return 'danger';
 
-			case 'user':
+			case 'STUDENT':
 				return 'success';
 
-			case 'new':
+			case 'TEACHER':
 				return 'info';
 
-			case 'negotiation':
+			case 'AUTHOR':
 				return 'warning';
 
-			case 'renewal':
+			case 'OBSERVATOR':
 				return null;
 		}
 	};
@@ -102,10 +102,6 @@ const UsersTable: React.FC<{
 		return <Tag value={rowData.role} severity={getSeverity(rowData.role)} />;
 	};
 
-	const roleFilterTemplate = (options) => {
-		return <Dropdown value={options.value} options={roles} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={roleItemTemplate} placeholder="Select One" className="p-column-filter" showClear />;
-	};
-
 	const actionBodyTemplate = () => {
 		return <Button type="button" icon="pi pi-cog" rounded></Button>;
 	};
@@ -116,20 +112,54 @@ const UsersTable: React.FC<{
 
 	const header = renderHeader();
 
+	const expandAll = () => {
+		const _expandedRows: DataTableExpandedRows = {};
+
+		modules.forEach((p) => (_expandedRows[`${p.id}`] = true));
+
+		setExpandedRows(_expandedRows);
+	};
+
+	const collapseAll = () => {
+		setExpandedRows(null);
+	};
+
+	const allowExpansion = (rowData) => {
+		return true;
+		// return rowData.lessons.length > 0;
+	};
+
+	const rowExpansionTemplate = (data) => {
+		return (
+			<div className="px-5">
+				<h5>User Roles</h5>
+				<DataTable
+					value={data.courses}
+					dataKey="id"
+					tableStyle={{ minWidth: '50rem' }}
+				>
+					<Column field="courseId" header="#" style={{ width: '5%' }}></Column>
+					<Column field="role" header="Role" style={{ minWidth: '12rem' }} body={roleBodyTemplate} />
+				</DataTable>
+			</div>
+		);
+	};
+
 	return (
 		<><Toast ref={toast} />
 			<div className="card">
 				<DataTable value={users} paginator header={header} rows={10}
 					paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
 					rowsPerPageOptions={[10, 25, 50]} dataKey="id" selectionMode="checkbox" selection={selectedUsers} onSelectionChange={(e) => setSelectedUsers(e.value)}
+					expandedRows={expandedRows} onRowToggle={(e) => setExpandedRows(e.data)} rowExpansionTemplate={rowExpansionTemplate}
 					filters={filters} filterDisplay="menu" globalFilterFields={['name', 'email', 'representative.name', 'balance', 'status']}
-					emptyMessage="No customers found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+					emptyMessage="No users found." currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
 					<Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
+					<Column expander={allowExpansion} style={{ width: '3rem' }} />
+					<Column field="image" style={{ minWidth: '6rem' }} body={imageBodyTemplate} />
 					<Column field="name" header="Name" sortable filter filterPlaceholder="Search by name" style={{ minWidth: '14rem' }} />
 					<Column field="email" header="Email" sortable filter filterPlaceholder="Search by email" style={{ minWidth: '14rem' }} />
-					<Column field="image" style={{ minWidth: '12rem' }} body={imageBodyTemplate} />
 					<Column field="emailVerified" header="Date" sortable filterField="date" dataType="date" style={{ minWidth: '12rem' }} body={dateBodyTemplate} filter filterElement={dateFilterTemplate} />
-					<Column field="role" header="Role" sortable filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={roleBodyTemplate} filter filterElement={roleFilterTemplate} />
 					<Column headerStyle={{ width: '5rem', textAlign: 'center' }} bodyStyle={{ textAlign: 'center', overflow: 'visible' }} body={actionBodyTemplate} />
 				</DataTable>
 			</div>

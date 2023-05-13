@@ -21,7 +21,12 @@ export const userRouter = createTRPCRouter({
           email: true,
           emailVerified: true,
           image: true,
-          role: true,
+          courses: {
+            select: {
+              courseId: true,
+              role: true,
+            },
+          },
         },
       });
     }),
