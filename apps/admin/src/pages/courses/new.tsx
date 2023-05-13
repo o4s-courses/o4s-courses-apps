@@ -23,12 +23,13 @@ const CreateCourseForm: React.FC = () => {
 			setName("");
 			setDescription("");
 			setImage("");
-			addAuthor({
+			toast.current?.show({ severity: 'success', summary: 'Success', detail: `Course ${data.id} created successfully`, life: 6000 });
+			addAuthor.mutate({
 				courseId: data.id,
-				userId: session.user.id,
+				userId: session?.user.id,
 				role: "AUTHOR",
 			});
-			toast.current?.show({ severity: 'success', summary: 'Success', detail: 'Course created successfully', life: 6000 });
+
 		},
 		onError(error) {
 			console.error(error);
