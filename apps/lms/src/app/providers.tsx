@@ -47,7 +47,7 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
 					// You can pass any HTTP headers you wish here
 					async headers() {
 						return {
-							authorization: `Bearer ca6b3baa-808b-456d-9330-8bbf1de815fe`,
+							authorization: `Bearer ${api - key}`,
 						};
 					},
 				}),
