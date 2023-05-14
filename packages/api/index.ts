@@ -1,9 +1,11 @@
 import { type inferRouterInputs, type inferRouterOutputs } from "@trpc/server";
 
-import { type AppRouter } from "./src/root";
+import { type AppFastifyRouter, type AppRouter } from "./src/root";
 
 export { appRouter, type AppRouter } from "./src/root";
+export { appFastifyRouter, type AppFastifyRouter } from "./src/root";
 export { createTRPCContext } from "./src/trpc";
+export { createFastifyContext } from "./src/trpc";
 
 /**
  * Inference helpers for input types

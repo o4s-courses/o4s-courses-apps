@@ -4,7 +4,7 @@ import { lessonRouter } from "./router/lesson";
 import { moduleRouter } from "./router/module";
 import { productRouter } from "./router/product";
 import { userRouter } from "./router/user";
-import { createTRPCRouter } from "./trpc";
+import { createFastifyRouter, createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   user: userRouter,
@@ -15,5 +15,15 @@ export const appRouter = createTRPCRouter({
   auth: authRouter,
 });
 
+export const appFastifyRouter = createFastifyRouter({
+  user: userRouter,
+  course: courseRouter,
+  module: moduleRouter,
+  lesson: lessonRouter,
+  product: productRouter,
+  auth: authRouter,
+});
+
 // export type definition of API
 export type AppRouter = typeof appRouter;
+export type AppFastifyRouter = typeof appFastifyRouter;

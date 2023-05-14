@@ -1,0 +1,37 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/server/index.ts --bundle --packages=external --platform=node --format=esm --outdir=dist --sourcemap",
+    "dev:server": "pnpm with-env tsx watch src/server",
+    "lint": "eslint --cache --ext \".js,.ts,.tsx\" --report-unused-disable-directives src",
+    "type-check": "pnpm with-env tsc",
+    "start:server": "node dist/server/index.js",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@o4s/db": "^0.1.0",
+    "@o4s/auth": "^0.1.0",
+    "@fastify/websocket": "^8.0.0",
+    "@trpc/client": "^10.26.0",
+    "@trpc/server": "^10.26.0",
+    "fastify": "^4.17.0",
+    "tslib": "^2.5.0",
+    "ws": "^8.13.0",
+    "zod": "^3.21.4",
+    "superjson": "^1.12.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.1.4",
+    "@types/ws": "^8.5.4",
+    "esbuild": "^0.17.10",
+    "eslint": "^8.40.0",
+    "dotenv-cli": "^7.2.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.0.4"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

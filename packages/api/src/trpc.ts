@@ -7,6 +7,7 @@
  * The pieces you will need to use are documented accordingly near the end
  */
 import { TRPCError, initTRPC } from "@trpc/server";
+import { type CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import superjson from "superjson";
 import { ZodError } from "zod";
@@ -97,6 +98,24 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
   });
 };
 
+export const createFastifyContext = async ({
+  req,
+  res,
+}: CreateFastifyContextOptions) => {
+  const authorization = req.headers.authorization;
+  const session: Session | null = null;
+
+  if (!(authorization === undefined)) {
+    const token = String(authorization.split(" ")[1]);
+    const session: Session | null = await getDBSession(token);
+
+    console.log(JSON.stringify(session));
+    return { req, res, session, prisma };
+  }
+
+  return { req, res, session, prisma };
+};
+
 /**
  * 2. INITIALIZATION
  *
@@ -104,6 +123,20 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
  * transformer
  */
 const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
+});
+
+const f = initTRPC.context<typeof createFastifyContext>().create({
   transformer: superjson,
   errorFormatter({ shape, error }) {
     return {
@@ -129,6 +162,8 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
  * @see https://trpc.io/docs/router
  */
 export const createTRPCRouter = t.router;
+
+export const createFastifyRouter = f.router;
 
 /**
  * Public (unauthed) procedure

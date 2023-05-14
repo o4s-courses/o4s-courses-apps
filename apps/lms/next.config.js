@@ -16,7 +16,6 @@ const nextConfig = {
 		localeDetection: false,
   },*/
 
-  /**
   async rewrites() {
     return {
       beforeFiles: [
@@ -30,7 +29,6 @@ const nextConfig = {
       ],
     };
   },
-	 */
 
   async headers() {
     return [

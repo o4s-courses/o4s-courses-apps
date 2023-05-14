@@ -38,7 +38,7 @@ export default function DashboardCourses() {
 				<Text>Session: {JSON.stringify(session)}</Text>
 				<ul>
 					{courses?.map((c) => (
-						<li key={c.id}>{c.id} - {c.name}</li>
+						<li key={c.id}>{JSON.stringify(c)}</li>
 					))}
 				</ul>
 			</Box>

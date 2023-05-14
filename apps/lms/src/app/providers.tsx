@@ -45,11 +45,11 @@ export const TrpcProvider: React.FC<{ children: React.ReactNode, }> = ({
 				httpBatchLink({
 					url: url,
 					// You can pass any HTTP headers you wish here
-					//async headers() {
-					//	return {
-					//		authorization: `Bearer ${getCookie('next-auth.session-token')}`,
-					//	};
-					//},
+					async headers() {
+						return {
+							authorization: `Bearer ca6b3baa-808b-456d-9330-8bbf1de815fe`,
+						};
+					},
 				}),
 			],
 			transformer: superjson,
